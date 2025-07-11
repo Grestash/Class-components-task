@@ -23,7 +23,6 @@ export class SearchBar extends Component<SearchBarProps, SearchBarState> {
 
   handleSearch = () => {
     const trimmed = this.state.searchQuery.trim();
-    if (trimmed === '') return;
     localStorage.setItem('searchQuery', trimmed);
     this.props.onSearch(trimmed);
   };
