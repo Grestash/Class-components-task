@@ -24,16 +24,22 @@ export class SearchResults extends Component<SearchResultsProps> {
       return <div>{this.props.error}</div>;
     }
 
-    return (
-      <div className="result-list">
-        {this.props.items.map((item) => (
-          <SearchItem
-            key={item.id}
-            name={item.name}
-            overview={item.overview}
-          ></SearchItem>
-        ))}
-      </div>
-    );
+    if (this.props.items.length === 0) {
+      return (
+        <p className='intro-text'>Search Rick And Morty characters!</p>
+      )
+    } else {
+      return (
+        <div className="result-list">
+          {this.props.items.map((item) => (
+            <SearchItem
+              key={item.id}
+              name={item.name}
+              overview={item.overview}
+            ></SearchItem>
+          ))}
+        </div>
+      );
+    }
   }
 }

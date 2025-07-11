@@ -39,7 +39,7 @@ export class SearchBar extends Component<SearchBarProps, SearchBarState> {
           value={this.state.searchQuery}
           onChange={this.handleChange}
           className="search-bar-input"
-          placeholder='Enter search term'
+          placeholder='Enter character name'
         />
         <button onClick={this.handleSearch} className="search-bar-button"></button>
       </div>

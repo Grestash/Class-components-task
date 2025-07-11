@@ -35,7 +35,11 @@ export class App extends Component<{}, AppState> {
       const response = await fetch(url);
 
       if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+        if (response.status === 404) {
+          throw new Error('No characters found.');
+        } else {
+          throw new Error(`Server error: ${response.status}`);
+        }
       }
 
       const data = await response.json();
@@ -49,9 +53,18 @@ export class App extends Component<{}, AppState> {
 
       this.setState({ items, isLoading: false });
     } catch (error) {
-      console.error('Fetch error');
+      let message: string = '';
+      if (error instanceof Error) console.log(error.message)
+
+      if (error instanceof Error) {
+        error.message === 'Failed to fetch'
+          ? (message = 'Network error. Please check your internet connection.')
+          : (message = error.message);
+        console.log(error.message);
+      }
+
       this.setState({
-        error: 'Something went wrong',
+        error: message,
         isLoading: false,
       });
     }
