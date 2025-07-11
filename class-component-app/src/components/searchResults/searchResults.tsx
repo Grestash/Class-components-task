@@ -24,11 +24,6 @@ export class SearchResults extends Component<SearchResultsProps> {
       return <div>{this.props.error}</div>;
     }
 
-    if (this.props.items.length === 0) {
-      return (
-        <p className='intro-text'>Search Rick And Morty characters!</p>
-      )
-    } else {
       return (
         <div className="result-list">
           {this.props.items.map((item) => (
@@ -42,4 +37,4 @@ export class SearchResults extends Component<SearchResultsProps> {
       );
     }
   }
-}
+

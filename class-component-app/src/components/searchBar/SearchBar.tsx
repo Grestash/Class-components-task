@@ -14,11 +14,10 @@ export class SearchBar extends Component<SearchBarProps, SearchBarState> {
   };
 
   componentDidMount(): void {
-    const savedQuery = localStorage.getItem('searchQuery');
-    if (savedQuery) {
-      this.setState({ searchQuery: savedQuery });
-      this.props.onSearch(savedQuery);
-    }
+    let savedQuery = localStorage.getItem('searchQuery');
+    savedQuery = savedQuery === null ? '' : savedQuery
+    this.setState({ searchQuery: savedQuery });
+    this.props.onSearch(savedQuery);
   }
 
   handleSearch = () => {
@@ -29,7 +28,11 @@ export class SearchBar extends Component<SearchBarProps, SearchBarState> {
 
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchQuery: e.target.value });
+
   };
+  handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === 'Enter') this.handleSearch()
+  }
 
   render() {
     return (
@@ -40,6 +43,7 @@ export class SearchBar extends Component<SearchBarProps, SearchBarState> {
           onChange={this.handleChange}
           className="search-bar-input"
           placeholder='Enter character name'
+          onKeyDown={this.handleKeyDown}
         />
         <button onClick={this.handleSearch} className="search-bar-button"></button>
       </div>

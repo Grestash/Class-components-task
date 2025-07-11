@@ -1,8 +1,10 @@
 import './App.css';
 import { SearchBar } from './components/searchBar/SearchBar';
 import { SearchResults } from './components/searchResults/SearchResults';
+import { ErrorTest } from './components/errorBoundary/ErrorTest';
 import { Component } from 'react';
 import type { Item } from './types';
+import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
 const API_URL = 'https://rickandmortyapi.com/api/character';
 
 interface ApiCharacter {
@@ -54,7 +56,7 @@ export class App extends Component<{}, AppState> {
       this.setState({ items, isLoading: false });
     } catch (error) {
       let message: string = '';
-      if (error instanceof Error) console.log(error.message)
+      if (error instanceof Error) console.log(error.message);
 
       if (error instanceof Error) {
         error.message === 'Failed to fetch'
@@ -74,14 +76,17 @@ export class App extends Component<{}, AppState> {
     const { items, isLoading, error } = this.state;
 
     return (
-      <main className="container">
-        <SearchBar onSearch={this.handleSearch}></SearchBar>
-        <SearchResults
-          items={items}
-          isLoading={isLoading}
-          error={error}
-        ></SearchResults>
-      </main>
+      <ErrorBoundary>
+        <main className="container">
+          <SearchBar onSearch={this.handleSearch}></SearchBar>
+          <SearchResults
+            items={items}
+            isLoading={isLoading}
+            error={error}
+          ></SearchResults>
+          <ErrorTest></ErrorTest>
+        </main>
+      </ErrorBoundary>
     );
   }
 }

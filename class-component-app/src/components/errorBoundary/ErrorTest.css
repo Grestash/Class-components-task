@@ -1,0 +1,7 @@
+.error-test {
+    position: fixed;
+    bottom: 10%;
+    right: 5%;
+    width: 150px;
+    height: 70px;
+}
