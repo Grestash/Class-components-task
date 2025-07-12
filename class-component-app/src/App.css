@@ -1,8 +1,7 @@
 #root {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
-  padding-top: 100px;
 }
 
 .container {
@@ -10,4 +9,26 @@
   flex-direction: column;
   row-gap: 100px;
   max-width: 400px;
+  margin: 0 auto;
+}
+
+.results-wrapper {
+  width: 100%;
+  min-height: calc(50vh - 60px);
+  background: rgb(39, 43, 51);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4.5rem 0px;
+}
+
+.search-bar-wrapper {
+  padding-bottom: 50px;
+}
+
+.header-title {
+  margin-bottom: 100px;
+  color: rgb(32, 35, 41);
+  font-weight: 900;
+  font-size: 4rem;
 }

@@ -15,26 +15,25 @@ export class SearchResults extends Component<SearchResultsProps> {
       return (
         <div className="loader-container">
           <div className="spinner"></div>
-          <p>Loading...</p>
+          <p style={{ color: 'white' }}>Loading...</p>
         </div>
       );
     }
 
     if (this.props.error) {
-      return <div>{this.props.error}</div>;
+      return <div className="error-text">{this.props.error}</div>;
     }
 
-      return (
-        <div className="result-list">
-          {this.props.items.map((item) => (
-            <SearchItem
-              key={item.id}
-              name={item.name}
-              overview={item.overview}
-            ></SearchItem>
-          ))}
-        </div>
-      );
-    }
+    return (
+      <div className="result-list">
+        {this.props.items.map((item) => (
+          <SearchItem
+            key={item.id}
+            name={item.name}
+            overview={item.overview}
+          ></SearchItem>
+        ))}
+      </div>
+    );
   }
-
+}

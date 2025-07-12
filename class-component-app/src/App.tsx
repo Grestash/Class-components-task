@@ -20,7 +20,7 @@ interface AppState {
   error: string | null;
 }
 
-export class App extends Component<{}, AppState> {
+export class App extends Component<object, AppState> {
   state: AppState = {
     items: [],
     isLoading: false,
@@ -50,7 +50,7 @@ export class App extends Component<{}, AppState> {
       const items: Item[] = data.results.map((item: ApiCharacter) => ({
         id: item.id,
         name: item.name,
-        overview: `${item.status} - ${item.species}`,
+        overview: `${item.status === 'unknown' ? 'Unknown' : item.status} - ${item.species}`,
       }));
 
       this.setState({ items, isLoading: false });
@@ -59,9 +59,11 @@ export class App extends Component<{}, AppState> {
       if (error instanceof Error) console.log(error.message);
 
       if (error instanceof Error) {
-        error.message === 'Failed to fetch'
-          ? (message = 'Network error. Please check your internet connection.')
-          : (message = error.message);
+        if (error.message === 'Failed to fetch') {
+          message = 'Network error. Please check your internet connection.';
+        } else {
+          message = error.message;
+        }
         console.log(error.message);
       }
 
@@ -77,14 +79,26 @@ export class App extends Component<{}, AppState> {
 
     return (
       <ErrorBoundary>
-        <main className="container">
-          <SearchBar onSearch={this.handleSearch}></SearchBar>
-          <SearchResults
-            items={items}
-            isLoading={isLoading}
-            error={error}
-          ></SearchResults>
-          <ErrorTest></ErrorTest>
+        <header>
+          <p className="header-title">Rick and Morty Character Search</p>
+        </header>
+        <main>
+          <div className="search-bar-wrapper">
+            <div className="container">
+              <SearchBar onSearch={this.handleSearch}></SearchBar>
+            </div>
+          </div>
+
+          <div className="results-wrapper">
+            <div className="container">
+              <SearchResults
+                items={items}
+                isLoading={isLoading}
+                error={error}
+              ></SearchResults>
+              <ErrorTest></ErrorTest>
+            </div>
+          </div>
         </main>
       </ErrorBoundary>
     );
