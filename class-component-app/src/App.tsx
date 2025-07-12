@@ -74,6 +74,10 @@ export class App extends Component<object, AppState> {
     }
   };
 
+  componentDidMount() {
+    document.title = "Rick and Morty Character Search";
+  }
+
   render() {
     const { items, isLoading, error } = this.state;
 

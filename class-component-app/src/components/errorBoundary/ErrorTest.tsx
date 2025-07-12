@@ -10,7 +10,6 @@ export class ErrorTest extends Component<object, ErrorTestState> {
     hasError: false,
   };
 
-
   handleError = () => {
     this.setState({
       hasError: true,

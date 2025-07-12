@@ -1,24 +1,23 @@
 .error-test {
-    position: fixed;
-    bottom: 10%;
-    right: 5%;
-    width: 150px;
-    height: 70px;
-    border-radius: 8px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    background-color: #ccc;
-    font-weight: 700;
-    font-size: 15px;
-  }
-  
-  .error-test:hover {
-    background-color: #bbb;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
-  }
-  
-  .error-test:active {
-    transform: scale(0.95);
-    background-color: #aaa;
-  }
-  
+  position: fixed;
+  bottom: 10%;
+  right: 5%;
+  width: 150px;
+  height: 70px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background-color: #ccc;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.error-test:hover {
+  background-color: #bbb;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.error-test:active {
+  transform: scale(0.95);
+  background-color: #aaa;
+}
