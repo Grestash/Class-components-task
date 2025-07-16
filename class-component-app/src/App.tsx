@@ -1,6 +1,6 @@
 import './App.css';
 import { SearchBar } from './components/searchBar/SearchBar';
-import { SearchResults } from './components/searchResults/SearchResults';
+import { SearchResults } from './components/searchResults/searchResults.tsx';
 import { ErrorTest } from './components/errorBoundary/ErrorTest';
 import { Component } from 'react';
 import type { Item } from './types';
@@ -75,7 +75,7 @@ export class App extends Component<object, AppState> {
   };
 
   componentDidMount() {
-    document.title = "Rick and Morty Character Search";
+    document.title = 'Rick and Morty Character Search';
   }
 
   render() {

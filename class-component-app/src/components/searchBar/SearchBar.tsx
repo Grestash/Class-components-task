@@ -46,7 +46,7 @@ export class SearchBar extends Component<SearchBarProps, SearchBarState> {
         />
         <button onClick={this.handleSearch} className="search-bar-button">
           <img
-            src="src\assets\search-svgrepo-com.svg"
+            src="/search-svgrepo-com.svg"
             alt="Search icon"
             className="button-icon"
           />
