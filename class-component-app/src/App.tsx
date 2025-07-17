@@ -5,7 +5,7 @@ import { ErrorTest } from './components/errorBoundary/ErrorTest';
 import { Component } from 'react';
 import type { Item } from './types';
 import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
-const API_URL = 'https://rickandmortyapi.com/api/character';
+export const API_URL = 'https://rickandmortyapi.com/api/character';
 
 interface ApiCharacter {
   id: number;
@@ -35,6 +35,7 @@ export class App extends Component<object, AppState> {
         ? `${API_URL}/?name=${encodeURIComponent(searchQuery)}&page=1`
         : `${API_URL}/?page=1`;
       const response = await fetch(url);
+      console.log('fetch response:', response);
 
       if (!response.ok) {
         if (response.status === 404) {
@@ -57,6 +58,8 @@ export class App extends Component<object, AppState> {
     } catch (error) {
       let message: string = '';
       if (error instanceof Error) console.log(error.message);
+
+      console.log('Testovy')
 
       if (error instanceof Error) {
         if (error.message === 'Failed to fetch') {

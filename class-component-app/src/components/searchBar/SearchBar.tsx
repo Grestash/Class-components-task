@@ -49,6 +49,7 @@ export class SearchBar extends Component<SearchBarProps, SearchBarState> {
             src="/search-svgrepo-com.svg"
             alt="Search icon"
             className="button-icon"
+            aria-label='Search'
           />
         </button>
       </div>

@@ -13,7 +13,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "test": "jest --watchAll",
-"cov": "jest --coverage --collectCoverageFrom='src/**/*.{ts,tsx}'"
+    "cov": "jest --coverage --collectCoverageFrom='src/**/*.{ts,tsx}'"
   },
   "dependencies": {
     "react": "^19.1.0",
