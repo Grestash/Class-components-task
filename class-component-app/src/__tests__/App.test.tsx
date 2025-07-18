@@ -115,26 +115,28 @@ test('Handles successful API responses', async () => {
 
 test('Handles API error responses', async () => {
   (fetch as jest.Mock).mockImplementation((url) => {
-    if(url.includes('name=somecrazytext')) {
-        return Promise.resolve({
-            ok: false,
-            status: 404,
-            json: async () => ({})
-        })
+    if (url.includes('name=somecrazytext')) {
+      return Promise.resolve({
+        ok: false,
+        status: 404,
+        json: async () => ({}),
+      });
     } else {
-        return Promise.resolve({
-            ok: true,
-            json:  async () => ({
-                results: [{
-                    id: 1,
-                    name: 'Rick Sanchez',
-                    status: 'Alive',
-                    species: 'Human',
-                }]
-            })
-        })
+      return Promise.resolve({
+        ok: true,
+        json: async () => ({
+          results: [
+            {
+              id: 1,
+              name: 'Rick Sanchez',
+              status: 'Alive',
+              species: 'Human',
+            },
+          ],
+        }),
+      });
     }
-  })
+  });
 
   render(<App />);
 

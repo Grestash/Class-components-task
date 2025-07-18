@@ -59,8 +59,6 @@ export class App extends Component<object, AppState> {
       let message: string = '';
       if (error instanceof Error) console.log(error.message);
 
-      console.log('Testovy')
-
       if (error instanceof Error) {
         if (error.message === 'Failed to fetch') {
           message = 'Network error. Please check your internet connection.';
