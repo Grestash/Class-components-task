@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import '@testing-library/jest-dom';
 import { API_URL } from '../App';
-import { userEvent } from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {
   localStorage.clear();
@@ -152,5 +152,17 @@ test('Handles API error responses', async () => {
 
   await waitFor(() => {
     expect(screen.getByText('No characters found.')).toBeInTheDocument();
+  });
+});
+
+test('Shows network error message', async () => {
+  (fetch as jest.Mock).mockRejectedValueOnce(new Error('Failed to fetch'));
+
+  render(<App />);
+
+  await waitFor(() => {
+    expect(
+      screen.getByText('Network error. Please check your internet connection.')
+    ).toBeInTheDocument();
   });
 });

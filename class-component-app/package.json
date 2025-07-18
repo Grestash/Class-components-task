@@ -12,8 +12,8 @@
     "format:fix": "prettier --write .",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "test": "jest --watchAll",
-    "cov": "jest --coverage --collectCoverageFrom='src/**/*.{ts,tsx}'"
+    "test": "jest --watchAll=false",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "react": "^19.1.0",
