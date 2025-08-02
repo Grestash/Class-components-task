@@ -1,5 +1,11 @@
-import Main from './pages/main';
+// import SearchPage from './pages/SearchPage';
+import AboutPage from './pages/AboutPage';
 
 export default function App() {
-  return <Main />;
+  return (
+    <>
+      {/* <SearchPage /> */}
+      <AboutPage />
+    </>
+  );
 }

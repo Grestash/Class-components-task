@@ -1,10 +1,10 @@
 import '../Main.css';
-import { SearchBar } from '../components/searchBar/SearchBar';
+import { SearchBar } from '../components/searchBar/SearchBar.tsx';
 import { SearchResults } from '../components/searchResults/searchResults.tsx';
-import { ErrorTest } from '../components/errorBoundary/ErrorTest';
+import { ErrorTest } from '../components/errorBoundary/ErrorTest.tsx';
 import { useEffect, useState } from 'react';
-import type { Item } from '../types';
-import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
+import type { Item } from '../types.ts';
+import ErrorBoundary from '../components/errorBoundary/ErrorBoundary.tsx';
 export const API_URL = 'https://rickandmortyapi.com/api/character';
 
 interface ApiCharacter {
@@ -35,7 +35,7 @@ function useLocalStorageState(
   return [value, setValue];
 }
 
-export function Main() {
+export default function SearchPage() {
   const [appState, setAppState] = useState<AppState>({
     items: [],
     isLoading: false,
@@ -133,4 +133,3 @@ export function Main() {
   );
 }
 
-export default Main;

@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import App from '../App';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import SearchPage from '../pages/SearchPage';
 import '@testing-library/jest-dom';
-import { API_URL } from '../App';
+import { API_URL } from '../pages/SearchPage';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {
@@ -19,12 +19,12 @@ test('demo', () => {
 });
 
 test('Renders the main page', () => {
-  render(<App />);
+  render(<SearchPage />);
   expect(true).toBeTruthy();
 });
 
 test('renders header title', () => {
-  render(<App />);
+  render(<SearchPage />);
   const title = screen.getByText(/Rick and Morty Character Search/i);
   expect(title).toBeInTheDocument();
 });
@@ -44,7 +44,7 @@ test('Makes initial API call', async () => {
     }),
   });
 
-  render(<App />);
+  render(<SearchPage />);
 
   await waitFor(() => {
     expect(fetch).toHaveBeenLastCalledWith(`${API_URL}/?page=1`);
@@ -66,7 +66,7 @@ test('Manages loading states during API calls', async () => {
     }),
   });
 
-  render(<App />);
+  render(<SearchPage />);
 
   expect(screen.getByText(/loading/i)).toBeInTheDocument();
 
@@ -76,7 +76,7 @@ test('Manages loading states during API calls', async () => {
 });
 
 test('Calls API with correct parameters', async () => {
-  render(<App />);
+  render(<SearchPage />);
 
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });
@@ -106,7 +106,7 @@ test('Handles successful API responses', async () => {
     }),
   });
 
-  render(<App />);
+  render(<SearchPage />);
 
   await waitFor(() => {
     expect(screen.queryByText(/rick sanchez/i)).toBeInTheDocument();
@@ -138,7 +138,7 @@ test('Handles API error responses', async () => {
     }
   });
 
-  render(<App />);
+  render(<SearchPage />);
 
   await waitFor(() => {
     expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
@@ -158,7 +158,7 @@ test('Handles API error responses', async () => {
 test('Shows network error message', async () => {
   (fetch as jest.Mock).mockRejectedValueOnce(new Error('Failed to fetch'));
 
-  render(<App />);
+  render(<SearchPage />);
 
   await waitFor(() => {
     expect(
