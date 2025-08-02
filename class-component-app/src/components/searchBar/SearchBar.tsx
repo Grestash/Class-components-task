@@ -1,58 +1,54 @@
-import { Component, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, useEffect, useRef } from 'react';
 import './SearchBar.css';
 
 interface SearchBarProps {
+  value: string;
   onSearch: (searchQuery: string) => void;
 }
-interface SearchBarState {
-  searchQuery: string;
-}
 
-export class SearchBar extends Component<SearchBarProps, SearchBarState> {
-  state: SearchBarState = {
-    searchQuery: '',
+export function SearchBar({ value, onSearch }: SearchBarProps) {
+  const [searchBarState, setSearchBarState] = useState(value);
+
+  const prevValueRef = useRef(value);
+
+  useEffect(() => {
+    if (prevValueRef.current !== value) {
+      setSearchBarState(value);
+      prevValueRef.current = value;
+    }
+  }, [value]);
+
+  const handleSearch = () => {
+    const trimmed = searchBarState.trim();
+    onSearch(trimmed);
   };
 
-  componentDidMount(): void {
-    let savedQuery = localStorage.getItem('searchQuery');
-    savedQuery = savedQuery === null ? '' : savedQuery;
-    this.setState({ searchQuery: savedQuery });
-    this.props.onSearch(savedQuery);
-  }
-
-  handleSearch = () => {
-    const trimmed = this.state.searchQuery.trim();
-    localStorage.setItem('searchQuery', trimmed);
-    this.props.onSearch(trimmed);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchBarState(e.target.value);
   };
 
-  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchQuery: e.target.value });
-  };
-  handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') this.handleSearch();
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') handleSearch();
   };
 
-  render() {
-    return (
-      <div className="search-bar">
-        <input
-          type="text"
-          value={this.state.searchQuery}
-          onChange={this.handleChange}
-          className="search-bar-input"
-          placeholder="Enter character name"
-          onKeyDown={this.handleKeyDown}
+  return (
+    <div className="search-bar">
+      <input
+        type="text"
+        value={searchBarState}
+        onChange={handleChange}
+        className="search-bar-input"
+        placeholder="Enter character name"
+        onKeyDown={handleKeyDown}
+      />
+      <button onClick={handleSearch} className="search-bar-button">
+        <img
+          src="/Class-components-task//search-svgrepo-com.svg"
+          alt="Search icon"
+          className="button-icon"
+          aria-label="Search"
         />
-        <button onClick={this.handleSearch} className="search-bar-button">
-          <img
-            src="/search-svgrepo-com.svg"
-            alt="Search icon"
-            className="button-icon"
-            aria-label='Search'
-          />
-        </button>
-      </div>
-    );
-  }
+      </button>
+    </div>
+  );
 }

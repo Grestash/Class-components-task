@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { SearchItem } from './SearchItem';
 import './SearchResults.css';
 import type { Item } from '../../types';
@@ -9,31 +8,30 @@ interface SearchResultsProps {
   error: string | null;
 }
 
-export class SearchResults extends Component<SearchResultsProps> {
-  render() {
-    if (this.props.isLoading) {
-      return (
-        <div className="loader-container">
-          <div className="spinner"></div>
-          <p style={{ color: 'white' }}>Loading...</p>
-        </div>
-      );
-    }
+export function SearchResults({items, isLoading, error}: SearchResultsProps) {
 
-    if (this.props.error) {
-      return <div className="error-text">{this.props.error}</div>;
-    }
+  if (isLoading) {
+          return (
+            <div className="loader-container">
+              <div className="spinner"></div>
+              <p style={{ color: 'white' }}>Loading...</p>
+            </div>
+          );
+        }
 
-    return (
-      <div className="result-list">
-        {this.props.items.map((item) => (
-          <SearchItem
-            key={item.id}
-            name={item.name}
-            overview={item.overview}
-          ></SearchItem>
-        ))}
-      </div>
-    );
-  }
+  if (error) {
+          return <div className="error-text">{error}</div>;
+        }
+
+  return (
+          <div className="result-list">
+            {items.map((item) => (
+              <SearchItem
+                key={item.id}
+                name={item.name}
+                overview={item.overview}
+              />
+            ))}
+          </div>
+        );
 }

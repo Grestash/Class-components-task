@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import './SearchItem.css';
 
 interface SearchItemProps {
@@ -6,13 +5,11 @@ interface SearchItemProps {
   overview: string;
 }
 
-export class SearchItem extends Component<SearchItemProps> {
-  render() {
-    return (
-      <div className="search-item">
-        <h3>{this.props.name}</h3>
-        <p>{this.props.overview}</p>
-      </div>
-    );
-  }
+export function SearchItem({ name, overview }: SearchItemProps) {
+  return (
+    <div className="search-item">
+      <h3>{name}</h3>
+      <p>{overview}</p>
+    </div>
+  );
 }
