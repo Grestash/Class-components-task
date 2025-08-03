@@ -1,10 +1,10 @@
-import '../Main.css';
-import { SearchBar } from '../components/searchBar/SearchBar.tsx';
-import { SearchResults } from '../components/searchResults/searchResults.tsx';
-import { ErrorTest } from '../components/errorBoundary/ErrorTest.tsx';
+import './SearchPage.css';
+import { SearchBar } from '../components/SearchPage/searchBar/SearchBar';
+import { SearchResults } from '../components/SearchPage/searchResults/searchResults';
+import { ErrorTest } from '../components/errorBoundary/ErrorTest';
 import { useEffect, useState } from 'react';
 import type { Item } from '../types.ts';
-import ErrorBoundary from '../components/errorBoundary/ErrorBoundary.tsx';
+import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
 export const API_URL = 'https://rickandmortyapi.com/api/character';
 
 interface ApiCharacter {

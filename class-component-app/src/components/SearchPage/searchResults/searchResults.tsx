@@ -1,6 +1,6 @@
 import { SearchItem } from './SearchItem';
 import './SearchResults.css';
-import type { Item } from '../../types';
+import type { Item } from 'types';
 
 interface SearchResultsProps {
   items: Item[];

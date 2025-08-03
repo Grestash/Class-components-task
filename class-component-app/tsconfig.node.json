@@ -12,7 +12,7 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "emitDeclarationOnly": true,
-    "noEmit": true,
+
     "composite": true,
 
     /* Linting */

@@ -1,0 +1,36 @@
+.aboutWrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 70px;
+}
+
+.container.reverse {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.about-image {
+    height: auto;
+    max-width: 40%;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+.info-text {
+    width: 50%;
+    text-align: justify;
+    font-size: 1.1rem;
+}
