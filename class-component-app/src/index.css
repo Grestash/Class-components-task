@@ -27,6 +27,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  padding-top: 10vh;
 }
 
 h1 {
@@ -50,7 +51,8 @@ p {
     color: #747bff;
   }
 
-  button {
-    background-color: #f9f9f9;
-  }
+}
+button {
+  background: none;
+  border: none;
 }

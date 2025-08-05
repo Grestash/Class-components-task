@@ -1,0 +1,57 @@
+.pagination {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3em;
+    user-select: none;
+    font-weight: bold;
+}
+
+.pagination-left,
+.pagination-right {
+    display: flex;
+    gap: 8px;
+    min-width: 200px;
+    justify-content: center;
+}
+.pagination-center {
+    flex:1;
+    white-space: nowrap;
+}
+
+.pagination button {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.first-icon {
+    width: auto;
+    height: 20px;
+    transform: rotate(180deg);
+}
+
+.prev-icon {
+    width: auto;
+    height: 20px;
+    transform: rotate(180deg);
+}
+
+.pagination-button-label {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.next-icon {
+    width: auto;
+    height: 20px;
+}

@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import type { Item } from '../types.ts';
 import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
 export const API_URL = 'https://rickandmortyapi.com/api/character';
+import { PaginationContext } from '../context/PaginationContext';
+import Pagination from 'components/SearchPage/searchResults/Pagination/Pagination';
 
 interface ApiCharacter {
   id: number;
@@ -18,6 +20,7 @@ interface AppState {
   items: Item[];
   isLoading: boolean;
   error: string | null;
+  totalPages: number;
 }
 
 function useLocalStorageState(
@@ -40,17 +43,19 @@ export default function SearchPage() {
     items: [],
     isLoading: false,
     error: null,
+    totalPages: 0,
   });
 
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const handleSearch = async (searchQuery: string) => {
+  const handleSearch = async (searchQuery: string, page = 1) => {
     setAppState({ ...appState, isLoading: true, error: null });
 
     try {
       const url = searchQuery
-        ? `${API_URL}/?name=${encodeURIComponent(searchQuery)}&page=1`
-        : `${API_URL}/?page=1`;
+        ? `${API_URL}/?name=${encodeURIComponent(searchQuery)}&page=${page}`
+        : `${API_URL}/?page=${page}`;
       const response = await fetch(url);
       console.log('fetch response:', response);
 
@@ -73,8 +78,16 @@ export default function SearchPage() {
         })
       );
 
-      setAppState({ ...appState, items: items, isLoading: false });
+      setAppState({
+        ...appState,
+        items: items,
+        isLoading: false,
+        totalPages: data.info.pages,
+      });
+      console.log(data.info.pages);
       setSearchQuery(searchQuery);
+      setCurrentPage(page);
+      console.log(page);
     } catch (error) {
       let message: string = '';
       if (error instanceof Error) console.log(error.message);
@@ -97,39 +110,50 @@ export default function SearchPage() {
   };
 
   useEffect(() => {
-    handleSearch(searchQuery);
+    handleSearch(searchQuery, currentPage);
   }, []);
 
   useEffect(() => {
-    handleSearch(searchQuery);
-  }, [searchQuery]);
+    handleSearch(searchQuery, currentPage);
+  }, [searchQuery, currentPage]);
 
   const { items, isLoading, error } = appState;
 
   return (
-    <ErrorBoundary>
-      <header>
-        <p className="header-title">Rick and Morty Character Search</p>
-      </header>
-      <main>
-        <div className="search-bar-wrapper">
-          <div className="container">
-            <SearchBar value={searchQuery} onSearch={handleSearch}></SearchBar>
+    <PaginationContext.Provider
+      value={{
+        currentPage,
+        totalPage: appState.totalPages,
+        setCurrentPage,
+      }}
+    >
+      <ErrorBoundary>
+        <header>
+          <p className="header-title">Rick and Morty Character Search</p>
+        </header>
+        <main>
+          <div className="search-bar-wrapper">
+            <div className="container">
+              <SearchBar
+                value={searchQuery}
+                onSearch={handleSearch}
+              ></SearchBar>
+            </div>
           </div>
-        </div>
 
-        <div className="results-wrapper">
-          <div className="container">
-            <SearchResults
-              items={items}
-              isLoading={isLoading}
-              error={error}
-            ></SearchResults>
-            <ErrorTest></ErrorTest>
+          <div className="results-wrapper">
+            <div className="container">
+              <SearchResults
+                items={items}
+                isLoading={isLoading}
+                error={error}
+              ></SearchResults>
+              <Pagination></Pagination>
+              <ErrorTest></ErrorTest>
+            </div>
           </div>
-        </div>
-      </main>
-    </ErrorBoundary>
+        </main>
+      </ErrorBoundary>
+    </PaginationContext.Provider>
   );
 }
-
