@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent, useEffect, useRef } from 'react';
-import './SearchBar.css';
+import styles from './SearchBar.module.css';
+
 
 interface SearchBarProps {
   value: string;
@@ -32,20 +33,20 @@ export function SearchBar({ value, onSearch }: SearchBarProps) {
   };
 
   return (
-    <div className="search-bar">
+    <div className={styles.searchBar}>
       <input
         type="text"
         value={searchBarState}
         onChange={handleChange}
-        className="search-bar-input"
+        className={styles.searchBarInput}
         placeholder="Enter character name"
         onKeyDown={handleKeyDown}
       />
-      <button onClick={handleSearch} className="search-bar-button">
+      <button onClick={handleSearch} className={styles.searchBarButton}>
         <img
-          src="/Class-components-task//search-svgrepo-com.svg"
+          src="/search-svgrepo-com.svg"
           alt="Search icon"
-          className="button-icon"
+          className={styles.buttonIcon}
           aria-label="Search"
         />
       </button>

@@ -1,10 +1,10 @@
 import authorImage from 'assets/images/Author-image2.png'
-
+import styles from '../../pages/AboutPage.module.css'
 
 export default function AuthorInfo() {
     return (
-        <div className="container reverse">
-        <div className="info-text">
+      <div className={`${styles.container} ${styles.reverse}`}>
+        <div className={styles.infoText}>
           <h2>About the Author</h2>
           <p>
             I am a second-year student at Belarusian State University of
@@ -15,7 +15,7 @@ export default function AuthorInfo() {
             frontend development.
           </p>
         </div>
-        <img src={authorImage} alt="" className='about-image'/>
+        <img src={authorImage} alt="" className={styles.aboutImage}/>
       </div>
     )
 }

@@ -1,9 +1,10 @@
 import technologiesImage from 'assets/images/technologies.png';
+import styles from '../../pages/AboutPage.module.css'
 
 export default function Technologies() {
   return (
-    <div className="container">
-      <div className="info-text">
+    <div className={styles.container}>
+      <div className={styles.infoText}>
         <h2>Technologies Used</h2>
         <p>
           The app is built with React and TypeScript, making the code more
@@ -13,7 +14,7 @@ export default function Technologies() {
           build really fast.
         </p>
       </div>
-      <img src={technologiesImage} alt="" className="about-image" />
+      <img src={technologiesImage} alt="" className={styles.aboutImage} />
     </div>
   );
 }

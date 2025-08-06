@@ -19,7 +19,7 @@
     justify-content: flex-end;
 }
 
-.about-image {
+.aboutImage {
     height: auto;
     max-width: 40%;
 }
@@ -29,7 +29,7 @@ h2 {
     font-weight: 700;
     margin-bottom: 1.5rem;
 }
-.info-text {
+.infoText {
     width: 50%;
     text-align: justify;
     font-size: 1.1rem;

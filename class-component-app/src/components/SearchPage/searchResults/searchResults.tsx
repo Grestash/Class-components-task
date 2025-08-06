@@ -22,12 +22,11 @@ export function SearchResults({items, isLoading, error}: SearchResultsProps) {
   if (error) {
           return <div className="error-text">{error}</div>;
         }
-
   return (
           <div className="result-list">
             {items.map((item) => (
               <SearchItem
-                key={item.id}
+                id={item.id}
                 name={item.name}
                 overview={item.overview}
               />

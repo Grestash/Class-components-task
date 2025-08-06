@@ -1,9 +1,10 @@
 import rickAndMortyLogo from 'assets/images/rick-and-morty-logo.png'
+import styles from '../../pages/AboutPage.module.css'
 
 export default function AppInfo() {
     return (
-        <div className="container reverse">
-        <div className="info-text">
+        <div className={`${styles.container} ${styles.reverse}`}>
+        <div className={styles.infoText}>
           <h2>About the Application</h2>
           <p>
             Rick and Morty Character Search is a React application that allows
@@ -13,7 +14,7 @@ export default function AppInfo() {
             through results using pagination.
           </p>
         </div>
-        <img src={rickAndMortyLogo} alt="Rick and Morty logo image" className='about-image'/>
+        <img src={rickAndMortyLogo} alt="Rick and Morty logo image" className={styles.aboutImage}/>
       </div>
     )
 }

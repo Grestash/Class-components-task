@@ -3,7 +3,16 @@ import paginationArrow from 'assets/icons/paginationArrow.svg';
 import paginationFirst from 'assets/icons/paginationFirst.svg';
 import './Pagination.css';
 
-export default function Pagination() {
+interface PaginationProps {
+  isLoading: boolean;
+  error: string | null;
+}
+
+export default function Pagination({ isLoading, error }: PaginationProps) {
+  if (isLoading || error) {
+    return null;
+  }
+
   const { currentPage, totalPage, setCurrentPage } = usePagination();
   if (totalPage <= 1) return null;
 

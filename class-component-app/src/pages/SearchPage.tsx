@@ -1,16 +1,19 @@
-import './SearchPage.css';
+import styles from './SearchPage.module.css';
 import { SearchBar } from '../components/SearchPage/searchBar/SearchBar';
 import { SearchResults } from '../components/SearchPage/searchResults/searchResults';
 import { ErrorTest } from '../components/errorBoundary/ErrorTest';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import type { Item } from '../types.ts';
 import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
 export const API_URL = 'https://rickandmortyapi.com/api/character';
 import { PaginationContext } from '../context/PaginationContext';
 import Pagination from 'components/SearchPage/searchResults/Pagination/Pagination';
+import CharacterDetails from 'components/SearchPage/CharacterDetails/CharacterDetails';
+import Header from 'components/Header/Header';
 
 interface ApiCharacter {
-  id: number;
+  id: string;
   name: string;
   status: string;
   species: string;
@@ -45,9 +48,20 @@ export default function SearchPage() {
     error: null,
     totalPages: 0,
   });
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const detailsId = searchParams.get('details');
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams.get('page')) || 1
+  );
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (searchQuery) params.set('query', searchQuery);
+    params.set('page', String(currentPage));
+    if (detailsId) params.set('details', detailsId);
+    setSearchParams(params);
+  }, [searchQuery, currentPage, detailsId, setSearchParams]);
 
   const handleSearch = async (searchQuery: string, page = 1) => {
     setAppState({ ...appState, isLoading: true, error: null });
@@ -83,6 +97,7 @@ export default function SearchPage() {
         items: items,
         isLoading: false,
         totalPages: data.info.pages,
+        error: null,
       });
       console.log(data.info.pages);
       setSearchQuery(searchQuery);
@@ -98,7 +113,6 @@ export default function SearchPage() {
         } else {
           message = error.message;
         }
-        console.log(error.message);
       }
 
       setAppState({
@@ -128,29 +142,33 @@ export default function SearchPage() {
       }}
     >
       <ErrorBoundary>
-        <header>
-          <p className="header-title">Rick and Morty Character Search</p>
-        </header>
-        <main>
-          <div className="search-bar-wrapper">
-            <div className="container">
-              <SearchBar
-                value={searchQuery}
-                onSearch={handleSearch}
-              ></SearchBar>
+        <Header />
+        <p className={styles.headerTitle}>Rick and Morty Character Search</p>
+        <main className={styles.splitContainer}>
+          <div className={styles.leftColumn}>
+            <div className={styles.searchBarWrapper}>
+              <div className={styles.container}>
+                <SearchBar
+                  value={searchQuery}
+                  onSearch={handleSearch}
+                ></SearchBar>
+              </div>
+            </div>
+
+            <div className={styles.resultsWrapper}>
+              <div className={styles.container}>
+                <SearchResults
+                  items={items}
+                  isLoading={isLoading}
+                  error={error}
+                ></SearchResults>
+                <Pagination isLoading={isLoading} error={error}></Pagination>
+                <ErrorTest></ErrorTest>
+              </div>
             </div>
           </div>
-
-          <div className="results-wrapper">
-            <div className="container">
-              <SearchResults
-                items={items}
-                isLoading={isLoading}
-                error={error}
-              ></SearchResults>
-              <Pagination></Pagination>
-              <ErrorTest></ErrorTest>
-            </div>
+          <div className={styles.rightColumn}>
+            {detailsId ? <CharacterDetails characterId={detailsId} /> : null}
           </div>
         </main>
       </ErrorBoundary>
