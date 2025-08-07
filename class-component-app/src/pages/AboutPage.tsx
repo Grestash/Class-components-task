@@ -9,7 +9,6 @@ export default function AboutPage() {
   return (
     <>
       <Header />
-
       <div className={styles.aboutWrapper}>
         <AppInfo />
         <Technologies />

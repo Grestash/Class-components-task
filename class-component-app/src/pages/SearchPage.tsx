@@ -1,7 +1,6 @@
 import styles from './SearchPage.module.css';
 import { SearchBar } from '../components/SearchPage/searchBar/SearchBar';
 import { SearchResults } from '../components/SearchPage/searchResults/searchResults';
-import { ErrorTest } from '../components/errorBoundary/ErrorTest';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import type { Item } from '../types.ts';
@@ -13,10 +12,11 @@ import CharacterDetails from 'components/SearchPage/CharacterDetails/CharacterDe
 import Header from 'components/Header/Header';
 
 interface ApiCharacter {
-  id: string;
+  id: number;
   name: string;
   status: string;
   species: string;
+  image: string;
 }
 
 interface AppState {
@@ -89,6 +89,7 @@ export default function SearchPage() {
           id: item.id,
           name: item.name,
           overview: `${item.status === 'unknown' ? 'Unknown' : item.status} - ${item.species}`,
+          image: item.image,
         })
       );
 
@@ -147,12 +148,10 @@ export default function SearchPage() {
         <main className={styles.splitContainer}>
           <div className={styles.leftColumn}>
             <div className={styles.searchBarWrapper}>
-              <div className={styles.container}>
-                <SearchBar
-                  value={searchQuery}
-                  onSearch={handleSearch}
-                ></SearchBar>
-              </div>
+              <SearchBar
+                value={searchQuery}
+                onSearch={handleSearch}
+              ></SearchBar>
             </div>
 
             <div className={styles.resultsWrapper}>
@@ -163,7 +162,6 @@ export default function SearchPage() {
                   error={error}
                 ></SearchResults>
                 <Pagination isLoading={isLoading} error={error}></Pagination>
-                <ErrorTest></ErrorTest>
               </div>
             </div>
           </div>

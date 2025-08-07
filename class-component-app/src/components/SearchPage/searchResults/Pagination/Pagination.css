@@ -6,6 +6,8 @@
     gap: 3em;
     user-select: none;
     font-weight: bold;
+    max-width: 70%;
+    margin: 0 auto;
 }
 
 .pagination-left,
@@ -15,10 +17,18 @@
     min-width: 200px;
     justify-content: center;
 }
+.pagination-left {
+    padding-right: 0.5em;
+}
+
+/* .pagination-right {
+    justify-content: end;
+} */
 
 .pagination-center {
     flex: 1;
-    white-space: nowrap;
+    display: flex;
+    justify-content: center;
 }
 
 .pagination button {

@@ -1,10 +1,26 @@
-import './Header.css'
+import './Header.css';
+import { NavLink } from 'react-router-dom';
 
 export default function Header() {
   return (
     <header>
       <nav>
-        <a href="/">Character Search</a> | <a href="/about">About the App</a>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? 'nav-link active' : 'nav-link'
+          }
+        >
+          Character Search
+        </NavLink>
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            isActive ? 'nav-link active' : 'nav-link'
+          }
+        >
+          About the App
+        </NavLink>
       </nav>
     </header>
   );

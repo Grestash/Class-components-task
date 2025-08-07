@@ -29,6 +29,7 @@ export function SearchResults({items, isLoading, error}: SearchResultsProps) {
                 id={item.id}
                 name={item.name}
                 overview={item.overview}
+                image = {item.image}
               />
             ))}
           </div>
