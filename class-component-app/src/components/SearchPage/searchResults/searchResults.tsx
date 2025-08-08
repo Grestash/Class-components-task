@@ -1,6 +1,7 @@
 import { SearchItem } from './SearchItem';
 import './SearchResults.css';
 import type { Item } from 'types';
+import Loader from 'components/Loader/Loader';
 
 interface SearchResultsProps {
   items: Item[];
@@ -8,30 +9,24 @@ interface SearchResultsProps {
   error: string | null;
 }
 
-export function SearchResults({items, isLoading, error}: SearchResultsProps) {
-
+export function SearchResults({ items, isLoading, error }: SearchResultsProps) {
   if (isLoading) {
-          return (
-            <div className="loader-container">
-              <div className="spinner"></div>
-              <p style={{ color: 'white' }}>Loading...</p>
-            </div>
-          );
-        }
+     return <Loader />;
+  }
 
   if (error) {
-          return <div className="error-text">{error}</div>;
-        }
+    return <div className="error-text">{error}</div>;
+  }
   return (
-          <div className="result-list">
-            {items.map((item) => (
-              <SearchItem
-                id={item.id}
-                name={item.name}
-                overview={item.overview}
-                image = {item.image}
-              />
-            ))}
-          </div>
-        );
+    <div className="result-list">
+      {items.map((item) => (
+        <SearchItem
+          id={item.id}
+          name={item.name}
+          overview={item.overview}
+          image={item.image}
+        />
+      ))}
+    </div>
+  );
 }

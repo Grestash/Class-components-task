@@ -4,6 +4,7 @@ footer {
     align-items: center;
     font-weight: 700;
 }
+
 .links {
     display: flex;
     justify-content: space-between;
@@ -12,5 +13,17 @@ footer {
 
 .footer-icon {
     width: 50px;
-    height:50px;
+    height: 50px;
+}
+
+.search-page-footer {
+
+    color: #fff;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.footer-wrapper {
+    background: rgb(39, 43, 51);
+
 }

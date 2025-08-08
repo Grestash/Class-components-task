@@ -10,6 +10,7 @@ import { PaginationContext } from '../context/PaginationContext';
 import Pagination from 'components/SearchPage/searchResults/Pagination/Pagination';
 import CharacterDetails from 'components/SearchPage/CharacterDetails/CharacterDetails';
 import Header from 'components/Header/Header';
+import Footer from 'components/AboutPage/Footer';
 
 interface ApiCharacter {
   id: number;
@@ -132,6 +133,13 @@ export default function SearchPage() {
     handleSearch(searchQuery, currentPage);
   }, [searchQuery, currentPage]);
 
+  useEffect(() => {
+    const element = document.querySelector(`.${styles.headerTitle}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [currentPage]);
+
   const { items, isLoading, error } = appState;
 
   return (
@@ -145,30 +153,34 @@ export default function SearchPage() {
       <ErrorBoundary>
         <Header />
         <p className={styles.headerTitle}>Rick and Morty Character Search</p>
-        <main className={styles.splitContainer}>
-          <div className={styles.leftColumn}>
-            <div className={styles.searchBarWrapper}>
-              <SearchBar
-                value={searchQuery}
-                onSearch={handleSearch}
-              ></SearchBar>
-            </div>
+        <div className={styles.searchBarWrapper}>
+          <SearchBar value={searchQuery} onSearch={handleSearch}></SearchBar>
+        </div>
 
+        <main
+          className={`${styles.splitContainer} ${detailsId ? styles.withDetails : styles.noDetails}`}
+        >
+          <div className={styles.leftColumn}>
             <div className={styles.resultsWrapper}>
               <div className={styles.container}>
-                <SearchResults
-                  items={items}
-                  isLoading={isLoading}
-                  error={error}
-                ></SearchResults>
+                <div
+                  className={`results-container ${detailsId ? 'withDetails' : ''}`}
+                >
+                  <SearchResults
+                    items={items}
+                    isLoading={isLoading}
+                    error={error}
+                  ></SearchResults>
+                </div>
                 <Pagination isLoading={isLoading} error={error}></Pagination>
               </div>
             </div>
           </div>
-          <div className={styles.rightColumn}>
+          <div className={`${styles.rightColumn} ${detailsId ? '' : styles.noDetails}`}>
             {detailsId ? <CharacterDetails characterId={detailsId} /> : null}
           </div>
         </main>
+        <Footer />
       </ErrorBoundary>
     </PaginationContext.Provider>
   );
