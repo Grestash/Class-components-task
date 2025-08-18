@@ -1,6 +1,6 @@
 import rssIcon from 'assets/icons/rss-logo.svg';
-import githubIcon from 'assets/icons/github-mark.png';
-import githubIconWhite from 'assets/icons/github-mark-white.png';
+import githubIcon from 'assets/icons/github-mark.svg';
+import githubIconWhite from 'assets/icons/github-mark-white.svg';
 import './Footer.css';
 import { useLocation } from 'react-router-dom';
 

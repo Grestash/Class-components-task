@@ -1,5 +1,6 @@
 import './SearchItem.css';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useTheme } from 'context/ThemeContext';
 
 interface SearchItemProps {
   id: number;
@@ -10,6 +11,8 @@ interface SearchItemProps {
 
 export function SearchItem({id, name, overview, image }: SearchItemProps) {
   const [searchParams] = useSearchParams();
+  const { theme} = useTheme();
+
 
   const params = new URLSearchParams(searchParams);
   params.set('details', String(id));
@@ -24,7 +27,7 @@ export function SearchItem({id, name, overview, image }: SearchItemProps) {
   }
 
   return (
-    <div className="search-item">
+    <div className={`search-item ${theme === 'dark' ? 'bg-gray-800 text-white' : ''}`}>
       <img src={image} alt="Character image" className='search-item-img'/>
       <Link to={`/?${params.toString()}`} className='search-item-name'>{name}</Link>
       <p className='search-item-overview'><span className={`status-icon ${status}`}></span>{overview}</p>

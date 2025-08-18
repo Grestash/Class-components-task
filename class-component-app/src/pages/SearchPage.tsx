@@ -1,4 +1,4 @@
-import styles from './SearchPage.module.css';
+import styles from './SearchPage.module.css'
 import { SearchBar } from '../components/SearchPage/searchBar/SearchBar';
 import { SearchResults } from '../components/SearchPage/searchResults/searchResults';
 import { useEffect, useState } from 'react';
@@ -125,9 +125,6 @@ export default function SearchPage() {
     }
   };
 
-  useEffect(() => {
-    handleSearch(searchQuery, currentPage);
-  }, []);
 
   useEffect(() => {
     handleSearch(searchQuery, currentPage);

@@ -92,7 +92,8 @@ export default function CharacterDetails({
   }, [characterId]);
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div className={styles.characterDetailsWrapper} ref={cardRef}> <Loader /> </div>)
   }
 
   if (error) {

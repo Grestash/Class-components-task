@@ -1,14 +1,17 @@
 import { SearchResults } from './searchResults';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 test('Renders correct number of items when data is provided', () => {
   const MockItems = [
-    { id: 1, name: 'Rick Sanchez', overview: 'Alive - Human' },
-    { id: 2, name: 'Morty Smith', overview: 'Alive - Human' },
-    { id: 3, name: 'Summer Smith', overview: 'Alive - Human' },
+    { id: 1, name: 'Rick Sanchez', overview: 'Alive - Human', image:'', },
+    { id: 2, name: 'Morty Smith', overview: 'Alive - Human',image:'' },
+    { id: 3, name: 'Summer Smith', overview: 'Alive - Human',image:'' },
   ];
 
-  render(<SearchResults items={MockItems} isLoading={false} error={null} />);
+  render(
+    <MemoryRouter><SearchResults items={MockItems} isLoading={false} error={null} /></MemoryRouter>
+  );
   const itemsArr = document.querySelectorAll('.search-item');
 
   expect(itemsArr.length).toBe(3);
@@ -27,10 +30,12 @@ test('Displays "no results" message when data array is empty', () => {
 
 test('Correctly displays item names and descriptions', () => {
   const MockItems = [
-    { id: 1, name: 'Rick Sanchez', overview: 'Alive - Human' },
+    { id: 1, name: 'Rick Sanchez', overview: 'Alive - Human', image:'' },
   ];
 
-  render(<SearchResults items={MockItems} isLoading={false} error={null} />);
+  render(
+    <MemoryRouter><SearchResults items={MockItems} isLoading={false} error={null} /></MemoryRouter>
+  );
 
   expect(screen.getByText(/rick sanchez/i)).toBeInTheDocument();
   expect(screen.getByText(/alive - human/i)).toBeInTheDocument();

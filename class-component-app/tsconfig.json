@@ -5,11 +5,20 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "Node",
     "baseUrl": "src",
     "paths": {
       "*": ["*"],
       "@context/*": ["context/*"],
-    }
+    },
+    "declaration": false,
+    "outDir": "./dist",
+    "noEmit": false
   },
-  "include": ["src"]
+
+  "include": ["src", "jest.setup.ts", "src/types/**/*.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }

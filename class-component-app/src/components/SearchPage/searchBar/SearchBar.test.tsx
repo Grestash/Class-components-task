@@ -6,8 +6,10 @@ beforeEach(() => {
   localStorage.clear();
 });
 
+const mockOnSearch = (query: string) => localStorage.setItem('searchQuery', query);
+
 test('Renders search input and search button', () => {
-  render(<SearchBar onSearch={() => {}} />);
+  render(<SearchBar value="" onSearch={() => {}} />);
 
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });
@@ -19,7 +21,7 @@ test('Renders search input and search button', () => {
 test('Displays previously saved search term from localStorage on mount', () => {
   localStorage.setItem('searchQuery', 'Rick');
 
-  render(<SearchBar onSearch={() => {}} />);
+  render(<SearchBar value={localStorage.getItem('searchQuery') ?? ''} onSearch={() => {}} />);
 
   expect(screen.getByDisplayValue('Rick')).toBeInTheDocument();
 });
@@ -27,13 +29,13 @@ test('Displays previously saved search term from localStorage on mount', () => {
 test('Shows empty input when no saved term exists', () => {
   localStorage.setItem('searchQuery', '');
 
-  render(<SearchBar onSearch={() => {}} />);
+  render(<SearchBar value="" onSearch={() => {}} />);
 
   expect(screen.getByDisplayValue('')).toBeInTheDocument();
 });
 
 test('Updates input value when user types', async () => {
-  render(<SearchBar onSearch={() => {}} />);
+  render(<SearchBar value="" onSearch={() => {}} />);
 
   const input = screen.getByRole('textbox');
 
@@ -43,7 +45,8 @@ test('Updates input value when user types', async () => {
 });
 
 test('Saves search term to localStorage when search button is clicked', async () => {
-  render(<SearchBar onSearch={() => {}} />);
+
+  render(<SearchBar value="" onSearch={mockOnSearch} />);
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });
 
@@ -54,7 +57,8 @@ test('Saves search term to localStorage when search button is clicked', async ()
 });
 
 test('Trims whitespace from search input before saving', async () => {
-  render(<SearchBar onSearch={() => {}} />);
+
+  render(<SearchBar value="" onSearch={mockOnSearch} />);
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });
 
@@ -66,7 +70,7 @@ test('Trims whitespace from search input before saving', async () => {
 
 test('Triggers search callback with correct parameters', async () => {
   const onSearchMock = jest.fn();
-  render(<SearchBar onSearch={onSearchMock} />);
+  render(<SearchBar value="" onSearch={onSearchMock} />);
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });
 
@@ -77,9 +81,13 @@ test('Triggers search callback with correct parameters', async () => {
 });
 
 test('Overwrites existing localStorage value when new search is performed', async () => {
-  localStorage.setItem('searchQuery', 'Morty');
 
-  render(<SearchBar onSearch={() => {}} />);
+  render(
+    <SearchBar
+      value={localStorage.getItem('searchQuery') ?? ''}
+      onSearch={mockOnSearch}
+    />
+  );
 
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });

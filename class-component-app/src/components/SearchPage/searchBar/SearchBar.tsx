@@ -1,6 +1,6 @@
-import { useState, type ChangeEvent, useEffect, useRef } from 'react';
+import { useState, type ChangeEvent, useEffect } from 'react';
 import styles from './SearchBar.module.css';
-
+import searchIcon from 'assets/icons/search-svgrepo-com.svg'
 
 interface SearchBarProps {
   value: string;
@@ -10,13 +10,8 @@ interface SearchBarProps {
 export function SearchBar({ value, onSearch }: SearchBarProps) {
   const [searchBarState, setSearchBarState] = useState(value);
 
-  const prevValueRef = useRef(value);
-
   useEffect(() => {
-    if (prevValueRef.current !== value) {
-      setSearchBarState(value);
-      prevValueRef.current = value;
-    }
+    setSearchBarState(value);
   }, [value]);
 
   const handleSearch = () => {
@@ -44,7 +39,7 @@ export function SearchBar({ value, onSearch }: SearchBarProps) {
       />
       <button onClick={handleSearch} className={styles.searchBarButton}>
         <img
-          src="/search-svgrepo-com.svg"
+          src={searchIcon}
           alt="Search icon"
           className={styles.buttonIcon}
           aria-label="Search"

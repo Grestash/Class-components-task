@@ -3,6 +3,7 @@ import './SearchResults.css';
 import type { Item } from 'types';
 import Loader from 'components/Loader/Loader';
 
+
 interface SearchResultsProps {
   items: Item[];
   isLoading: boolean;

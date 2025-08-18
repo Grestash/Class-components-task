@@ -1,13 +1,29 @@
-import type {Config} from 'jest'
+import type { Config } from 'jest';
 
 const config: Config = {
-  testEnvironment: 'jest-environment-jsdom', // Same name of the lib you installed
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'], // The file you created to extend jest config and "implement" the jest-dom environment in the jest globals
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
-    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__mocks__/fileMock.js', // The global stub for weird files
-    '\\.(css|less|sass|scss)$': 'identity-obj-proxy', // The mock for style related files
-    '^@/(.*)$': '<rootDir>/src/$1', // [optional] Are you using aliases?
+   '\\.(svg\\?react)$': '<rootDir>/src/__mocks__/svgMock.js',
+    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
+    '\\.(png|jpg|jpeg|gif|webp)$': '<rootDir>/src/__mocks__/fileMock.js',
+    '^assets/(.*)$': '<rootDir>/src/assets/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^components/(.*)$': '<rootDir>/src/components/$1',
+    '^pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^types$': '<rootDir>/src/types.ts',
+    '^context/(.*)$': '<rootDir>/src/context/$1',
   },
+  transform: {
+    '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
+    '^.+\\.svg(\\?react)?$': 'jest-transformer-svg',
+  },
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.json',
+    },
+  },
+
   coverageThreshold: {
     global: {
       statements: 80,
@@ -16,6 +32,7 @@ const config: Config = {
       lines: 50,
     },
   },
+
 };
 
 export default config;
