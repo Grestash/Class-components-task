@@ -1,0 +1,8 @@
+.theme-img {
+    height: 2em;
+    width: auto;
+}
+.theme-img:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}

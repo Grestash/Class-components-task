@@ -27,8 +27,9 @@ export function SearchItem({id, name, overview, image }: SearchItemProps) {
   }
 
   return (
-    <div className={`search-item ${theme === 'dark' ? 'bg-gray-800 text-white' : ''}`}>
+    <div className={`search-item ${theme === 'dark' ? 'dark' : 'light'}`}>
       <img src={image} alt="Character image" className='search-item-img'/>
+
       <Link to={`/?${params.toString()}`} className='search-item-name'>{name}</Link>
       <p className='search-item-overview'><span className={`status-icon ${status}`}></span>{overview}</p>
     </div>

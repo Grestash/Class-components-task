@@ -4,6 +4,8 @@ header {
     max-width: 95%;
     margin: 0 auto;
     padding: 0px 1.5rem;
+    column-gap: 1.75rem;
+    padding-top: 3vh;
 }
 
 nav {
@@ -18,7 +20,6 @@ nav {
     position: relative;
     padding-bottom: 4px;
     transition: color 0.3s ease;
-    color: #222;
 }
 
 .nav-link::after {
@@ -28,8 +29,13 @@ nav {
     bottom: 0;
     height: 3px;
     width: 0%;
-    background-color: rgb(32, 35, 41);
     transition: width 0.3s ease;
+}
+.nav-link.light::after {
+    background-color: rgb(32, 35, 41);
+  }
+.nav-link.dark::after {
+    background-color: white;
 }
 
 .nav-link:hover::after {

@@ -11,6 +11,7 @@ import Pagination from 'components/SearchPage/searchResults/Pagination/Paginatio
 import CharacterDetails from 'components/SearchPage/CharacterDetails/CharacterDetails';
 import Header from 'components/Header/Header';
 import Footer from 'components/AboutPage/Footer';
+import { useTheme } from 'context/ThemeContext';
 
 interface ApiCharacter {
   id: number;
@@ -55,6 +56,7 @@ export default function SearchPage() {
   const [currentPage, setCurrentPage] = useState(
     Number(searchParams.get('page')) || 1
   );
+  const {theme} = useTheme()
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -149,7 +151,9 @@ export default function SearchPage() {
     >
       <ErrorBoundary>
         <Header />
-        <p className={styles.headerTitle}>Rick and Morty Character Search</p>
+        <p className={styles.headerTitle} style={{
+          color: theme === 'light' ? 'rgb(32, 35, 41)' : 'white',
+        }}>Rick and Morty Character Search</p>
         <div className={styles.searchBarWrapper}>
           <SearchBar value={searchQuery} onSearch={handleSearch}></SearchBar>
         </div>

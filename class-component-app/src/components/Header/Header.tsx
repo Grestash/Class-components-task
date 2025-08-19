@@ -1,27 +1,38 @@
 import './Header.css';
 import { NavLink } from 'react-router-dom';
+import ThemeToggle from 'components/ThemeToggle/ThemeToggle';
+import { useTheme } from 'context/ThemeContext';
 
 export default function Header() {
-  return (
+  const {theme} = useTheme()
+    return (
     <header>
       <nav>
         <NavLink
           to="/"
           className={({ isActive }) =>
-            isActive ? 'nav-link active' : 'nav-link'
+            `nav-link ${isActive ? 'active' : ''} ${theme}`
           }
+          style={{
+            color: theme === 'light' ? '#222' : 'white',
+          }}
+
         >
           Character Search
         </NavLink>
         <NavLink
           to="/about"
           className={({ isActive }) =>
-            isActive ? 'nav-link active' : 'nav-link'
+            `nav-link ${isActive ? 'active' : ''} ${theme}`
           }
+          style={{
+            color: theme === 'light' ? '#222' : 'white',
+          }}
         >
           About the App
         </NavLink>
       </nav>
+      <ThemeToggle></ThemeToggle>
     </header>
   );
 }

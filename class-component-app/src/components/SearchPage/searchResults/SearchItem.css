@@ -1,8 +1,6 @@
 .search-item {
   border-radius: 0.5rem;
-  border: 1px solid #ccc;
   padding: 12px;
-  background-color: #f9f9f9;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
@@ -12,6 +10,14 @@
   flex-basis: 200px;
   max-width: 300px;
   box-sizing: border-box;
+}
+.search-item.light {
+  background-color: #f9f9f9;
+  color: rgb(32, 35, 41);
+}
+.search-item.dark {
+  background: rgb(60, 62, 68);
+  color: #fff;
 }
 
 .search-item-overview {
@@ -32,14 +38,13 @@
   font-size: 1.5rem;
   font-weight: 800;
   text-align: center;
+  color: inherit
 }
 
 .search-item-name:hover {
   color: rgb(72, 75, 81);
   transform: scale(1.05);
 }
-
-
 
 .status-icon {
   height: 0.6rem;

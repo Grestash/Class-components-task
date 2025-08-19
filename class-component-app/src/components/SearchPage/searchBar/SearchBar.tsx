@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent, useEffect } from 'react';
 import styles from './SearchBar.module.css';
 import searchIcon from 'assets/icons/search-svgrepo-com.svg'
+import { useTheme } from 'context/ThemeContext';
 
 interface SearchBarProps {
   value: string;
@@ -9,6 +10,7 @@ interface SearchBarProps {
 
 export function SearchBar({ value, onSearch }: SearchBarProps) {
   const [searchBarState, setSearchBarState] = useState(value);
+  const {theme} = useTheme()
 
   useEffect(() => {
     setSearchBarState(value);
@@ -28,7 +30,7 @@ export function SearchBar({ value, onSearch }: SearchBarProps) {
   };
 
   return (
-    <div className={styles.searchBar}>
+    <div className={styles.searchBar} >
       <input
         type="text"
         value={searchBarState}
@@ -36,6 +38,9 @@ export function SearchBar({ value, onSearch }: SearchBarProps) {
         className={styles.searchBarInput}
         placeholder="Enter character name"
         onKeyDown={handleKeyDown}
+        style={{
+          border: theme === 'light' ? '2px solid black' : '',
+        }}
       />
       <button onClick={handleSearch} className={styles.searchBarButton}>
         <img
