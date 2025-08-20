@@ -159,7 +159,9 @@ export default function SearchPage() {
         </div>
 
         <main
-          className={`${styles.splitContainer} ${detailsId ? styles.withDetails : styles.noDetails}`}
+          className={`${styles.splitContainer} ${detailsId ? styles.withDetails : styles.noDetails}`} style={{
+            backgroundColor: theme === 'dark' ? '#1a1d21' : '',
+          }}
         >
           <div className={styles.leftColumn}>
             <div className={styles.resultsWrapper}>
@@ -180,8 +182,8 @@ export default function SearchPage() {
           <div className={`${styles.rightColumn} ${detailsId ? '' : styles.noDetails}`}>
             {detailsId ? <CharacterDetails characterId={detailsId} /> : null}
           </div>
+          <Footer />
         </main>
-        <Footer />
       </ErrorBoundary>
     </PaginationContext.Provider>
   );

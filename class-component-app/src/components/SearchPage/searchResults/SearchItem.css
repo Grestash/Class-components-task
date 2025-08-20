@@ -10,6 +10,7 @@
   flex-basis: 200px;
   max-width: 300px;
   box-sizing: border-box;
+  position: relative;
 }
 .search-item.light {
   background-color: #f9f9f9;
@@ -42,7 +43,6 @@
 }
 
 .search-item-name:hover {
-  color: rgb(72, 75, 81);
   transform: scale(1.05);
 }
 
@@ -69,4 +69,11 @@
 .results-container.withDetails .search-item {
   flex-basis: calc(33.333% - 1.5rem);
   max-width: calc(33.333% - 1.5rem);
+}
+
+.search-item-checkbox {
+  position: absolute;
+  bottom: 0.5em;
+  right: 0.5em;
+
 }

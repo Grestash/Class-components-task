@@ -13,12 +13,20 @@
   padding: 8px;
 }
 
+.light {
+  border: 2px black solid;
+}
+
+.dark {
+  background-color:  #24292e;
+  color: #fff;
+  border: none;
+}
 .searchBarButton {
   cursor: pointer;
   height: 60px;
   width: 60px;
   border-radius: 50%;
-  border: 2px solid #ccc;
   background-color: #ccc;
   display: flex;
   align-items: center;

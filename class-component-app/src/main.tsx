@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../src/app/store';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -11,8 +13,14 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <BrowserRouter basename={import.meta.env.MODE === 'production' ? '/Class-components-task' : '/'}>
-      <App />
+    <BrowserRouter
+      basename={
+        import.meta.env.MODE === 'production' ? '/Class-components-task' : '/'
+      }
+    >
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </StrictMode>
 );

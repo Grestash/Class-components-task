@@ -13,6 +13,7 @@
     "paths": {
       "*": ["*"],
       "@context/*": ["context/*"],
+      "features/*": ["features/*"],
     },
     "declaration": false,
     "outDir": "./dist",
