@@ -12,6 +12,7 @@ import CharacterDetails from 'components/SearchPage/CharacterDetails/CharacterDe
 import Header from 'components/Header/Header';
 import Footer from 'components/AboutPage/Footer';
 import { useTheme } from 'context/ThemeContext';
+import SelectionInfo from 'components/SearchPage/SelectionInfo/SelectionInfo';
 
 interface ApiCharacter {
   id: number;
@@ -57,6 +58,7 @@ export default function SearchPage() {
     Number(searchParams.get('page')) || 1
   );
   const {theme} = useTheme()
+  
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -175,6 +177,7 @@ export default function SearchPage() {
                     error={error}
                   ></SearchResults>
                 </div>
+                <SelectionInfo />
                 <Pagination isLoading={isLoading} error={error}></Pagination>
               </div>
             </div>

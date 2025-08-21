@@ -37,7 +37,10 @@ export function SearchItem({ id, name, overview, image }: SearchItemProps) {
   };
 
   return (
-    <div className={`search-item ${theme === 'dark' ? 'dark' : 'light'}`}>
+    <div className={`search-item ${theme === 'dark' ? 'dark' : 'light'}`} onClick={(e) => {
+      const elem = e.target as HTMLElement
+      if(!(elem.closest('a[href]'))) handleToggle()
+    }}>
       <img src={image} alt="Character image" className="search-item-img" />
 
       <Link to={`/?${params.toString()}`} className="search-item-name">
@@ -51,7 +54,7 @@ export function SearchItem({ id, name, overview, image }: SearchItemProps) {
         type="checkbox"
         className="search-item-checkbox"
         checked={isChecked}
-        onChange={handleToggle}
+        readOnly
       />
     </div>
   );

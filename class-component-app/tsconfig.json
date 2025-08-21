@@ -14,6 +14,7 @@
       "*": ["*"],
       "@context/*": ["context/*"],
       "features/*": ["features/*"],
+      "app/*": ["app/*"],
     },
     "declaration": false,
     "outDir": "./dist",
