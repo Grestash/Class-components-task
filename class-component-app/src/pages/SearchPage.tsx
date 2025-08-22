@@ -58,7 +58,6 @@ export default function SearchPage() {
     Number(searchParams.get('page')) || 1
   );
   const {theme} = useTheme()
-  
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -177,7 +176,7 @@ export default function SearchPage() {
                     error={error}
                   ></SearchResults>
                 </div>
-                <SelectionInfo />
+                <SelectionInfo  />
                 <Pagination isLoading={isLoading} error={error}></Pagination>
               </div>
             </div>
