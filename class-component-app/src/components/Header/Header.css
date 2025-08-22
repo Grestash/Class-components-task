@@ -1,0 +1,51 @@
+header {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 0px 1.5rem;
+    column-gap: 1.75rem;
+    padding-top: 3vh;
+}
+
+nav {
+    display: flex;
+    column-gap: 1.75rem;
+    font-weight: 700;
+    font-size: 1.2em;
+    text-decoration: none;
+}
+
+.nav-link {
+    position: relative;
+    padding-bottom: 4px;
+    transition: color 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+.nav-link.light::after {
+    background-color: rgb(32, 35, 41);
+  }
+.nav-link.dark::after {
+    background-color: white;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    cursor: default;
+}
+
+.nav-link.active::after {
+    width: 100%;
+}

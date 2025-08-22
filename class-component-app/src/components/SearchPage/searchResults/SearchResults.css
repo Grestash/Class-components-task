@@ -1,0 +1,20 @@
+
+.intro-text {
+  font-size: 30px;
+}
+
+.result-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.error-text {
+  color: #fff;
+  font-weight: 900;
+  font-size: 2rem;
+}
