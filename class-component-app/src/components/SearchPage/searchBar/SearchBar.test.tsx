@@ -1,15 +1,27 @@
 import { SearchBar } from './SearchBar';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import { ThemeContext } from 'context/ThemeContext';
+import { ThemeContextType } from 'context/ThemeContext';
 
 beforeEach(() => {
   localStorage.clear();
 });
 
-const mockOnSearch = (query: string) => localStorage.setItem('searchQuery', query);
+const mockOnSearch = (query: string) =>
+  localStorage.setItem('searchQuery', query);
+
+const themeValue: ThemeContextType = {
+  theme: 'light',
+  toggleTheme: jest.fn(),
+};
 
 test('Renders search input and search button', () => {
-  render(<SearchBar value="" onSearch={() => {}} />);
+  render(
+    <ThemeContext.Provider value={themeValue}>
+      <SearchBar value="" onSearch={() => {}} />
+    </ThemeContext.Provider>
+  );
 
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });
@@ -17,25 +29,38 @@ test('Renders search input and search button', () => {
   expect(input).toBeInTheDocument();
   expect(button).toBeInTheDocument();
 });
-
 test('Displays previously saved search term from localStorage on mount', () => {
   localStorage.setItem('searchQuery', 'Rick');
 
-  render(<SearchBar value={localStorage.getItem('searchQuery') ?? ''} onSearch={() => {}} />);
+  render(
+    <ThemeContext.Provider value={themeValue}>
+      <SearchBar
+        value={localStorage.getItem('searchQuery') ?? ''}
+        onSearch={() => {}}
+      />{' '}
+    </ThemeContext.Provider>
+  );
 
   expect(screen.getByDisplayValue('Rick')).toBeInTheDocument();
 });
 
 test('Shows empty input when no saved term exists', () => {
   localStorage.setItem('searchQuery', '');
-
-  render(<SearchBar value="" onSearch={() => {}} />);
+  render(
+    <ThemeContext.Provider value={themeValue}>
+      <SearchBar value="" onSearch={() => {}} />
+    </ThemeContext.Provider>
+  );
 
   expect(screen.getByDisplayValue('')).toBeInTheDocument();
 });
 
 test('Updates input value when user types', async () => {
-  render(<SearchBar value="" onSearch={() => {}} />);
+  render(
+    <ThemeContext.Provider value={themeValue}>
+      <SearchBar value="" onSearch={() => {}} />
+    </ThemeContext.Provider>
+  );
 
   const input = screen.getByRole('textbox');
 
@@ -45,8 +70,12 @@ test('Updates input value when user types', async () => {
 });
 
 test('Saves search term to localStorage when search button is clicked', async () => {
+  render(
+    <ThemeContext.Provider value={themeValue}>
+      <SearchBar value="" onSearch={mockOnSearch} />
+    </ThemeContext.Provider>
+  );
 
-  render(<SearchBar value="" onSearch={mockOnSearch} />);
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });
 
@@ -57,8 +86,12 @@ test('Saves search term to localStorage when search button is clicked', async ()
 });
 
 test('Trims whitespace from search input before saving', async () => {
+  render(
+    <ThemeContext.Provider value={themeValue}>
+      <SearchBar value="" onSearch={mockOnSearch} />
+    </ThemeContext.Provider>
+  );
 
-  render(<SearchBar value="" onSearch={mockOnSearch} />);
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });
 
@@ -70,7 +103,12 @@ test('Trims whitespace from search input before saving', async () => {
 
 test('Triggers search callback with correct parameters', async () => {
   const onSearchMock = jest.fn();
-  render(<SearchBar value="" onSearch={onSearchMock} />);
+  render(
+    <ThemeContext.Provider value={themeValue}>
+      <SearchBar value="" onSearch={onSearchMock} />
+    </ThemeContext.Provider>
+  );
+
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });
 
@@ -81,12 +119,13 @@ test('Triggers search callback with correct parameters', async () => {
 });
 
 test('Overwrites existing localStorage value when new search is performed', async () => {
-
   render(
-    <SearchBar
-      value={localStorage.getItem('searchQuery') ?? ''}
-      onSearch={mockOnSearch}
-    />
+    <ThemeContext.Provider value={themeValue}>
+      <SearchBar
+        value={localStorage.getItem('searchQuery') ?? ''}
+        onSearch={mockOnSearch}
+      />
+    </ThemeContext.Provider>
   );
 
   const input = screen.getByRole('textbox');

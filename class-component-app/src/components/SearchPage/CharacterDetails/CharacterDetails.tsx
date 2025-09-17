@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { API_URL } from 'pages/SearchPage';
+import { useEffect} from 'react';
 import Loader from 'components/Loader/Loader';
 import styles from './CharacterDetail.module.css';
 import closeIcon from 'assets/icons/closeIcon.svg';
 import { useSearchParams } from 'react-router-dom';
 import { useRef } from 'react';
+import { useGetCharacterByIdQuery, useGetEpisodeByUrlQuery } from '../../../services/api';
 
 interface CharacterDetailsProps {
   characterId: string;
 }
 
-interface Character {
+export interface Character {
   id: number;
   name: string;
   status: string;
@@ -25,34 +25,17 @@ export default function CharacterDetails({
   characterId,
 }: CharacterDetailsProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [character, setCharacter] = useState<Character | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  async function handleSearchDetails() {
-    setIsLoading(true);
-    try {
-      const response = await fetch(`${API_URL}/${characterId}`);
+  const { data: character, isFetching, error: characterError } = useGetCharacterByIdQuery({
+    characterId
+  });
 
-      const data = await response.json();
-      console.log(data);
+  const { data: episode, error: episodeError } = useGetEpisodeByUrlQuery(character?.episode?.[0] ?? '', {
+    skip: !character?.episode?.[0],
+  });
 
-      let firstEpisodeName = '';
-      const epResponse = await fetch(data.episode[0]);
-      if (!epResponse.ok) throw new Error(`Episode error ${epResponse.status}`);
-
-      const epData = await epResponse.json();
-      firstEpisodeName = epData.name;
-
-      setCharacter({ ...data, firstEpisodeName });
-      setIsLoading(false);
-    } catch (error) {
-      if (error instanceof Error) setError(error.message || 'Failed to fetch');
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  const firstEpisodeName = episodeError ? 'Unknown' : episode?.name;
 
   const handleClose = () => {
     const newParams = new URLSearchParams(searchParams);
@@ -87,17 +70,14 @@ export default function CharacterDetails({
     };
   }, [handleClose]);
 
-  useEffect(() => {
-    handleSearchDetails();
-  }, [characterId]);
 
-  if (isLoading) {
+  if (isFetching) {
     return (
       <div className={styles.characterDetailsWrapper} ref={cardRef}> <Loader /> </div>)
   }
 
-  if (error) {
-    return <div className={styles.errorText}>{error}</div>;
+  if (characterError) {
+    return <div className={styles.errorText}>{(characterError as Error)?.message || 'Failed to load character.'}</div>;
   }
 
   return (
@@ -134,7 +114,7 @@ export default function CharacterDetails({
         </div>
         <div className={styles.characterDetailSection}>
           <span className={styles.spanLabel}>First appeared in episode: </span>
-          <span className={styles.spanText}>{character?.firstEpisodeName}</span>
+          <span className={styles.spanText}>{firstEpisodeName}</span>
         </div>
       </div>
     </div>

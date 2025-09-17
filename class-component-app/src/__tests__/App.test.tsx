@@ -4,6 +4,27 @@ import '@testing-library/jest-dom';
 import { API_URL } from '../pages/SearchPage';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeContext } from 'context/ThemeContext';
+import { ThemeContextType } from 'context/ThemeContext';
+import selectionReducer from 'features/selection/selectionSlice';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+jest.mock('assets/icons/moon.png', () => 'test-file-stub');
+jest.mock('assets/icons/sun.png', () => 'test-file-stub');
+
+const store = configureStore({
+  reducer: {
+    selection: selectionReducer,
+  },
+  preloadedState: {
+    selection: [1, 2],
+  },
+});
+
+const themeValue: ThemeContextType = {
+  theme: 'light',
+  toggleTheme: jest.fn(),
+};
 
 beforeEach(() => {
   localStorage.clear();
@@ -20,14 +41,30 @@ test('demo', () => {
 });
 
 test('Renders the main page', () => {
+  render(
+    <Provider store={store}>
+      <ThemeContext.Provider value={themeValue}>
+        <MemoryRouter>
+          <SearchPage />
+        </MemoryRouter>
+      </ThemeContext.Provider>
+    </Provider>
+  );
 
-  render(<MemoryRouter><SearchPage /> </MemoryRouter>);
   expect(true).toBeTruthy();
 });
 
-test('renders header title', () => {
-  render(<MemoryRouter><SearchPage /> </MemoryRouter>);
-  const title = screen.getByText(/Rick and Morty Character Search/i);
+test('renders header title', async () => {
+  render(
+    <Provider store={store}>
+      <ThemeContext.Provider value={themeValue}>
+        <MemoryRouter>
+          <SearchPage />
+        </MemoryRouter>
+      </ThemeContext.Provider>
+    </Provider>
+  );
+  const title = await screen.findByText(/Rick and Morty Character Search/i);
   expect(title).toBeInTheDocument();
 });
 
@@ -46,7 +83,15 @@ test('Makes initial API call', async () => {
     }),
   });
 
-  render(<MemoryRouter><SearchPage /> </MemoryRouter>);
+  render(
+    <Provider store={store}>
+      <ThemeContext.Provider value={themeValue}>
+        <MemoryRouter>
+          <SearchPage />
+        </MemoryRouter>
+      </ThemeContext.Provider>
+    </Provider>
+  );
 
   await waitFor(() => {
     expect(fetch).toHaveBeenLastCalledWith(`${API_URL}/?page=1`);
@@ -68,7 +113,15 @@ test('Manages loading states during API calls', async () => {
     }),
   });
 
-  render(<MemoryRouter><SearchPage /> </MemoryRouter>);
+  render(
+    <Provider store={store}>
+      <ThemeContext.Provider value={themeValue}>
+        <MemoryRouter>
+          <SearchPage />
+        </MemoryRouter>
+      </ThemeContext.Provider>
+    </Provider>
+  );
 
   expect(screen.getByText(/loading/i)).toBeInTheDocument();
 
@@ -78,7 +131,16 @@ test('Manages loading states during API calls', async () => {
 });
 
 test('Calls API with correct parameters', async () => {
-  render(<MemoryRouter><SearchPage /> </MemoryRouter>);
+  render(
+    <Provider store={store}>
+      {' '}
+      <ThemeContext.Provider value={themeValue}>
+        <MemoryRouter>
+          <SearchPage />
+        </MemoryRouter>
+      </ThemeContext.Provider>
+    </Provider>
+  );
 
   const input = screen.getByRole('textbox');
   const button = screen.getByRole('button', { name: /search/i });
@@ -93,74 +155,113 @@ test('Calls API with correct parameters', async () => {
   });
 });
 
-// test('Handles successful API responses', async () => {
-//   (fetch as jest.Mock).mockResolvedValueOnce({
-//     ok: true,
-//     json: async () => ({
-//       results: [
-//         {
-//           id: 1,
-//           name: 'Rick Sanchez',
-//           status: 'Alive',
-//           species: 'Human',
-//         },
-//       ],
-//     }),
-//   });
+test('Handles successful API responses', async () => {
+  (fetch as jest.Mock).mockResolvedValueOnce({
+    ok: true,
+    json: async () => ({
+      info: {
+        count: 1,
+        pages: 1,
+        next: null,
+        prev: null,
+      },
+      results: [
+        {
+          id: 1,
+          name: 'Rick Sanchez',
+          status: 'Alive',
+          species: 'Human',
+        },
+      ],
+    }),
+  });
 
-//   render(<MemoryRouter><SearchPage /> </MemoryRouter>);
+  render(
+    <Provider store={store}>
+      {' '}
+      <ThemeContext.Provider value={themeValue}>
+        <MemoryRouter>
+          <SearchPage />
+        </MemoryRouter>
+      </ThemeContext.Provider>
+    </Provider>
+  );
 
-//   await waitFor(() => {
-//     expect(screen.queryByText(/rick sanchez/i)).toBeInTheDocument();
-//   });
-// });
+  await waitFor(() => {
+    expect(screen.queryByText(/rick sanchez/i)).toBeInTheDocument();
+  });
+});
 
-// test('Handles API error responses', async () => {
-//   (fetch as jest.Mock).mockImplementation((url) => {
-//     if (url.includes('name=somecrazytext')) {
-//       return Promise.resolve({
-//         ok: false,
-//         status: 404,
-//         json: async () => ({}),
-//       });
-//     } else {
-//       return Promise.resolve({
-//         ok: true,
-//         json: async () => ({
-//           results: [
-//             {
-//               id: 1,
-//               name: 'Rick Sanchez',
-//               status: 'Alive',
-//               species: 'Human',
-//             },
-//           ],
-//         }),
-//       });
-//     }
-//   });
+test('Handles API error responses', async () => {
+  (fetch as jest.Mock).mockImplementation((url) => {
+    if (url.includes('name=somecrazytext')) {
+      return Promise.resolve({
+        ok: false,
+        status: 404,
+        json: async () => ({}),
+      });
+    } else {
+      return Promise.resolve({
+        ok: true,
+        json: async () => ({
+          info: {
+            count: 1,
+            pages: 1,
+            next: null,
+            prev: null,
+          },
+          results: [
+            {
+              id: 1,
+              name: 'Rick Sanchez',
+              status: 'Alive',
+              species: 'Human',
+            },
+          ],
+        }),
+      });
+    }
+  });
 
-//   render(<MemoryRouter><SearchPage /> </MemoryRouter>);
+  render(
+    <Provider store={store}>
+      {' '}
+      <ThemeContext.Provider value={themeValue}>
+        <MemoryRouter>
+          <SearchPage />
+        </MemoryRouter>
+      </ThemeContext.Provider>
+    </Provider>
+  );
 
-//   await waitFor(() => {
-//     expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
-//   });
+  await waitFor(() => {
+    expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
+  });
 
-//   const input = screen.getByRole('textbox');
-//   const button = screen.getByRole('button', { name: /search/i });
+  const input = screen.getByRole('textbox');
+  const button = screen.getByRole('button', { name: /search/i });
 
-//   await userEvent.type(input, 'somecrazytext');
-//   await userEvent.click(button);
+  await userEvent.type(input, 'somecrazytext');
+  await userEvent.click(button);
 
-//   await waitFor(() => {
-//     expect(screen.getByText('No characters found.')).toBeInTheDocument();
-//   });
-// });
+  await waitFor(() => {
+    expect(screen.getByText('No characters found.')).toBeInTheDocument();
+  });
+});
 
 test('Shows network error message', async () => {
   (fetch as jest.Mock).mockRejectedValueOnce(new Error('Failed to fetch'));
 
-  render(<MemoryRouter><SearchPage /> </MemoryRouter>);
+  render(
+    <Provider store={store}>
+      {' '}
+      <ThemeContext.Provider value={themeValue}>
+        <MemoryRouter>
+          <SearchPage />
+        </MemoryRouter>
+      </ThemeContext.Provider>
+    </Provider>
+  );
 
   await waitFor(() => {
     expect(
