@@ -1,6 +1,7 @@
+'use client'
 import { useSelector } from 'react-redux';
-import { RootState } from 'app/store';
-import { useAppDispatch } from 'app/hooks';
+import { RootState } from 'store/store';
+import { useAppDispatch } from 'store/hooks';
 import { clear } from 'features/selection/selectionSlice';
 import './SelectionInfo.css';
 

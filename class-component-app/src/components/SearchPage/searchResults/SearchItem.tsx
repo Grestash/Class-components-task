@@ -1,7 +1,8 @@
 import './SearchItem.css';
-import { Link, useSearchParams } from 'react-router-dom';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useTheme } from 'context/ThemeContext';
-import { AppDispatch, RootState } from 'app/store';
+import { AppDispatch, RootState } from 'store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggle } from '../../../features/selection/selectionSlice';
 
@@ -13,11 +14,12 @@ interface SearchItemProps {
 }
 
 export function SearchItem({ id, name, overview, image }: SearchItemProps) {
-  const [searchParams] = useSearchParams();
   const { theme } = useTheme();
 
-  const params = new URLSearchParams(searchParams);
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
   params.set('details', String(id));
+
 
   let status: string = '';
   if (overview.includes('Alive')) {
@@ -43,7 +45,7 @@ export function SearchItem({ id, name, overview, image }: SearchItemProps) {
     }}>
       <img src={image} alt="Character image" className="search-item-img" />
 
-      <Link to={`/?${params.toString()}`} className="search-item-name">
+      <Link href={`/?${params.toString()}`} className="search-item-name">
         {name}
       </Link>
       <p className="search-item-overview">

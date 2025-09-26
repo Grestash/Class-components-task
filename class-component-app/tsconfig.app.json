@@ -8,7 +8,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -16,7 +15,6 @@
     "jsx": "react-jsx",
     "baseUrl": "./src",
 
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

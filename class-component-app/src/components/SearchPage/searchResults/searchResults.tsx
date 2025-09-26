@@ -1,3 +1,4 @@
+'use client'
 import { SearchItem } from './SearchItem';
 import './SearchResults.css';
 import type { Item } from 'types';

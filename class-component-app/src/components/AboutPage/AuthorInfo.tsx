@@ -5,7 +5,7 @@ export default function AuthorInfo() {
     return (
       <div className={`${styles.container} ${styles.reverse}`}>
         <div className={styles.infoText}>
-          <h2>About the Author</h2>
+          <h2  className={styles.title}>About the Author</h2>
           <p>
             I am a second-year student at Belarusian State University of
             Informatics and Radioelectronics (BSUIR), currently studying

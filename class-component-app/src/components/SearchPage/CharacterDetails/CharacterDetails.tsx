@@ -1,7 +1,7 @@
+'use client'
 import { useEffect} from 'react';
 import Loader from 'components/Loader/Loader';
 import styles from './CharacterDetail.module.css';
-import closeIcon from 'assets/icons/closeIcon.svg';
 import { useSearchParams } from 'react-router-dom';
 import { useRef } from 'react';
 import { useGetCharacterByIdQuery, useGetEpisodeByUrlQuery } from '../../../services/api';
@@ -83,7 +83,7 @@ export default function CharacterDetails({
   return (
     <div className={styles.characterDetailsWrapper} ref={cardRef}>
       <button className={styles.closeButton} onClick={handleClose}>
-        <img src={closeIcon} alt="Cross" className={styles.crossImage} />
+        <img src="/icons/closeIcon.svg" alt="Cross" className={styles.crossImage} />
       </button>
       <img
         src={character?.image}

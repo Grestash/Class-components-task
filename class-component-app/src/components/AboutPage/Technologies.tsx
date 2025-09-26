@@ -5,7 +5,7 @@ export default function Technologies() {
   return (
     <div className={styles.container}>
       <div className={styles.infoText}>
-        <h2>Technologies Used</h2>
+        <h2  className={styles.title}>Technologies Used</h2>
         <p>
           The app is built with React and TypeScript, making the code more
           organized and easier to work with. It uses React Router to let users

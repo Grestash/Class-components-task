@@ -1,8 +1,10 @@
-import styles from './SearchPage.module.css';
+'use client'
+
+import styles from '../pages/SearchPage.module.css';
 import { SearchBar } from '../components/SearchPage/searchBar/SearchBar';
 import { SearchResults } from '../components/SearchPage/searchResults/searchResults';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'next/navigation';
 import { useGetCharactersQuery } from '../services/api';
 import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
 export const API_URL = 'https://rickandmortyapi.com/api/character';
@@ -33,7 +35,7 @@ function useLocalStorageState(
 }
 
 export default function SearchPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const detailsId = searchParams.get('details');
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
   const [currentPage, setCurrentPage] = useState(
@@ -50,12 +52,12 @@ export default function SearchPage() {
   const totalPages = data?.totalPages || 0;
 
   useEffect(() => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(searchParams.toString());
     if (searchQuery) params.set('query', searchQuery);
     params.set('page', String(currentPage));
     if (detailsId) params.set('details', detailsId);
-    setSearchParams(params);
-  }, [searchQuery, currentPage, detailsId, setSearchParams]);
+    window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+  }, [searchQuery, currentPage, detailsId, searchParams]);
 
   useEffect(() => {
     const element = document.querySelector(`.${styles.headerTitle}`);

@@ -5,7 +5,7 @@ export default function AppInfo() {
     return (
         <div className={`${styles.container} ${styles.reverse}`}>
         <div className={styles.infoText}>
-          <h2>About the Application</h2>
+          <h2  className={styles.title}>About the Application</h2>
           <p>
             Rick and Morty Character Search is a React application that allows
             users to search and explore characters from the Rick and Morty REST

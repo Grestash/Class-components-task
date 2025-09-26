@@ -1,23 +1,21 @@
-import rssIcon from 'assets/icons/rss-logo.svg';
-import githubIcon from 'assets/icons/github-mark.svg';
-import githubIconWhite from 'assets/icons/github-mark-white.svg';
+'use client'
 import './Footer.css';
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
-  const location = useLocation();
+  const pathname = usePathname();
 
   return (
-    <div className={location.pathname === '/' ? 'footer-wrapper' : ''}>
-      <footer className={location.pathname === '/' ? 'search-page-footer' : ''}>
+    <div className={pathname === '/' ? 'footer-wrapper' : ''}>
+      <footer className={pathname === '/' ? 'search-page-footer' : ''}>
         <p>Created by Pavel Shliatskiy</p>
         <div className="links">
           <a href="https://rs.school/courses/reactjs">
-            <img src={rssIcon} alt="RS School icon" className="footer-icon" />
+            <img src="/icons/rss-logo.svg" alt="RS School icon" className="footer-icon" />
           </a>
           <a href="https://github.com/Grestash">
             <img
-              src={location.pathname === '/' ? githubIconWhite : githubIcon}
+              src={pathname === '/' ? "/icons/github-mark-white.svg" : "/icons/github-mark.svg"}
               alt="GitHub icon"
               className="footer-icon"
             />

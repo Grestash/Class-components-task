@@ -1,7 +1,6 @@
+'use client'
 import { useState, type ChangeEvent, useEffect } from 'react';
 import styles from './SearchBar.module.css';
-import searchIcon from 'assets/icons/search-svgrepo-com.svg'
-import searchIconWhite from 'assets/icons/search-icon-white.svg'
 import { useTheme } from 'context/ThemeContext';
 
 interface SearchBarProps {
@@ -44,7 +43,7 @@ export function SearchBar({ value, onSearch }: SearchBarProps) {
           backgroundColor: theme === 'dark' ? '#24292e' : '',
         }}>
         <img
-          src={theme === 'light' ? searchIcon : searchIconWhite}
+          src={theme === 'light' ? "/icons/search-svgrepo-com.svg" : "/icons/search-icon-white.svg"}
           alt="Search icon"
           className={styles.buttonIcon}
           aria-label="Search"

@@ -1,26 +1,75 @@
 {
   "files": [],
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    {
+      "path": "./tsconfig.app.json"
+    }
   ],
   "compilerOptions": {
-    "jsx": "react-jsx",
+    "jsx": "preserve",
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
     "module": "ESNext",
     "target": "ESNext",
     "moduleResolution": "Node",
     "baseUrl": "src",
     "paths": {
-      "*": ["*"],
-      "@context/*": ["context/*"],
-      "features/*": ["features/*"],
-      "app/*": ["app/*"],
+      "*": [
+        "*"
+      ],
+      "@context/*": [
+        "context/*"
+      ],
+      "features/*": [
+        "features/*"
+      ],
+      "app/*": [
+        "app/*"
+      ],
+      "assets/*": [
+        "assets/*"
+      ],
+      "components/*": [
+        "components/*"
+      ],
+      "pages/*": [
+        "pages/*"
+      ],
+      "context/*": [
+        "context/*"
+      ]
     },
     "declaration": false,
     "outDir": "./dist",
-    "noEmit": false
+    "noEmit": false,
+    "esModuleInterop": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "strict": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strictNullChecks": true
   },
-
-  "include": ["src", "jest.setup.ts", "src/types/**/*.d.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "dist/types/**/*.ts",
+    "jest.setup.ts",
+    "next-env.d.ts",
+    "src",
+    "src/types/**/*.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
