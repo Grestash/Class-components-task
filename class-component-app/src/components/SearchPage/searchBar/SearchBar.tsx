@@ -2,6 +2,7 @@
 import { useState, type ChangeEvent, useEffect } from 'react';
 import styles from './SearchBar.module.css';
 import { useTheme } from 'context/ThemeContext';
+import { useTranslations } from 'next-intl';
 
 interface SearchBarProps {
   value: string;
@@ -11,6 +12,7 @@ interface SearchBarProps {
 export function SearchBar({ value, onSearch }: SearchBarProps) {
   const [searchBarState, setSearchBarState] = useState(value);
   const {theme} = useTheme()
+  const t = useTranslations('SearchBar')
 
   useEffect(() => {
     setSearchBarState(value);
@@ -36,7 +38,7 @@ export function SearchBar({ value, onSearch }: SearchBarProps) {
         value={searchBarState}
         onChange={handleChange}
         className={`${styles.searchBarInput} ${theme === 'dark' ? styles.dark : styles.light}`}
-        placeholder="Enter character name"
+        placeholder={t('placeholder')}
         onKeyDown={handleKeyDown}
       />
       <button onClick={handleSearch} className={styles.searchBarButton} style={{

@@ -1,21 +1,23 @@
-import authorImage from 'assets/images/Author-image2.png'
-import styles from '../../pages/AboutPage.module.css'
+import Image from 'next/image';
+import styles from '../../app/[locale]/about/AboutPage.module.css';
+import { useTranslations } from 'next-intl';
 
 export default function AuthorInfo() {
-    return (
-      <div className={`${styles.container} ${styles.reverse}`}>
-        <div className={styles.infoText}>
-          <h2  className={styles.title}>About the Author</h2>
-          <p>
-            I am a second-year student at Belarusian State University of
-            Informatics and Radioelectronics (BSUIR), currently studying
-            Computer Engineering, specializing in programming hardware and
-            developing software for embedded mobile systems. As a participant in
-            the RS School React course, I am expanding my skills in modern
-            frontend development.
-          </p>
-        </div>
-        <img src={authorImage} alt="" className={styles.aboutImage}/>
+  const t = useTranslations('AboutPage.author');
+
+  return (
+    <div className={`${styles.container} ${styles.reverse}`}>
+      <div className={styles.infoText}>
+        <h2 className={styles.title}>{t('title')}</h2>
+        <p>{t('description')}</p>
       </div>
-    )
+      <Image
+        src="/images/Author-image.png"
+        alt="Author image"
+        width={500}
+        height={500}
+        className={styles.aboutImage}
+      />
+    </div>
+  );
 }

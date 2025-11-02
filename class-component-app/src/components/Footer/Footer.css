@@ -1,14 +1,24 @@
 footer {
+    background: var(--footer-bg);
+}
+
+.footer-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 700;
+    max-width: 80%;
+    margin: 0 auto;
 }
 
 .links {
     display: flex;
     justify-content: space-between;
     min-width: 20%;
+}
+
+.footer-title {
+    color: var(--footer-text-color);
 }
 
 .footer-icon {
@@ -23,3 +33,12 @@ footer {
     margin: 0 auto;
 }
 
+[page-type="search"] {
+    --footer-bg: var(--results-bg-color);
+    --footer-text-color: #ffffff;
+}
+
+[page-type="about"] {
+    --footer-bg: var(--bg-color);
+    --footer-text-color: var(--text-color);
+}

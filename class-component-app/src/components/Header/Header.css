@@ -4,7 +4,7 @@ header {
     max-width: 95%;
     margin: 0 auto;
     padding: 0px 1.5rem;
-    column-gap: 1.75rem;
+    column-gap: 5em;
     padding-top: 3vh;
 }
 
@@ -19,10 +19,12 @@ nav {
 .nav-link {
     position: relative;
     padding-bottom: 4px;
-    transition: color 0.3s ease;
+    color: var(--text-color);
 }
 
+
 .nav-link::after {
+    transition: color 0.3s ease;
     content: '';
     position: absolute;
     left: 0;
@@ -31,11 +33,9 @@ nav {
     width: 0%;
     transition: width 0.3s ease;
 }
-.nav-link.light::after {
-    background-color: rgb(32, 35, 41);
-  }
-.nav-link.dark::after {
-    background-color: white;
+
+.nav-link::after {
+    background-color: var(--text-color);
 }
 
 .nav-link:hover::after {
@@ -48,4 +48,9 @@ nav {
 
 .nav-link.active::after {
     width: 100%;
+}
+
+.setting-wrapper {
+    display: flex;
+    gap: 1.75em;
 }

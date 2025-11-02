@@ -1,6 +1,6 @@
-'use client'
 import { usePagination } from 'context/PaginationContext';
 import './Pagination.css';
+import { useTranslations } from 'next-intl';
 
 interface PaginationProps {
   isLoading: boolean;
@@ -8,6 +8,7 @@ interface PaginationProps {
 }
 
 export default function Pagination({ isLoading, error }: PaginationProps) {
+  const t = useTranslations('Pagination')
   if (isLoading || error) {
     return null;
   }
@@ -30,7 +31,7 @@ export default function Pagination({ isLoading, error }: PaginationProps) {
             alt="Previous icon"
             className="prev-icon"
           />
-          <span className="pagination-button-label">Previous</span>
+          <span className="pagination-button-label">{t('prev')}</span>
         </button>
       </div>
 
@@ -45,7 +46,7 @@ export default function Pagination({ isLoading, error }: PaginationProps) {
           disabled={currentPage === totalPage}
           onClick={() => setCurrentPage(currentPage + 1)}
         >
-          <span className="pagination-button-label">Next</span>
+          <span className="pagination-button-label">{t('next')}</span>
           <img src="/icons/paginationArrow.svg" alt="Next icon" className="next-icon" />
         </button>
       </div>

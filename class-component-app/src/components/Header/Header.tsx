@@ -1,22 +1,27 @@
-'use client'
 import './Header.css';
 import Link from 'next/link';
+import { useTranslations, useLocale } from 'next-intl';
 import ThemeToggle from 'components/ThemeToggle/ThemeToggle';
-import { useTheme } from 'context/ThemeContext';
+import LanguageSwitcher from 'components/LanguageSwitcher/LanguageSwitcher';
 
 export default function Header() {
-  const {theme} = useTheme()
-    return (
+  const t = useTranslations('Header');
+  const locale = useLocale();
+
+  return (
     <header>
       <nav>
-      <Link href="/" className={`nav-link ${theme}`}>
-          Character Search
+        <Link href={`/${locale}`} className="nav-link">
+          {t('home')}
         </Link>
-        <Link href="/about" className={`nav-link ${theme}`}>
-          About the App
+        <Link href={`/${locale}/about`} className="nav-link">
+          {t('about')}
         </Link>
       </nav>
-      <ThemeToggle></ThemeToggle>
+      <div className="setting-wrapper">
+        <LanguageSwitcher />
+        <ThemeToggle />
+      </div>
     </header>
   );
 }

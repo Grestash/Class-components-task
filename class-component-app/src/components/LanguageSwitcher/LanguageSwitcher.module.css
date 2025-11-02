@@ -1,0 +1,18 @@
+.languageSwitcher button {
+    font-size: 0.9em;
+    padding: 0;
+    color: var(--text-color);
+    font-weight: 700;
+    padding-top: 3px;
+}
+
+.languageSwitcher button:disabled {
+    color: var(--lang-button-disabled)
+}
+
+.languageSwitcher {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+}

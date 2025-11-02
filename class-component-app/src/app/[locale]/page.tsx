@@ -1,14 +1,13 @@
-'use client'
+'use client';
 
-import styles from '../pages/SearchPage.module.css';
-import { SearchBar } from '../components/SearchPage/searchBar/SearchBar';
-import { SearchResults } from '../components/SearchPage/searchResults/searchResults';
+import styles from '../../pages/SearchPage.module.css';
+import { SearchBar } from '../../components/SearchPage/searchBar/SearchBar';
+import { SearchResults } from '../../components/SearchPage/searchResults/searchResults';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useGetCharactersQuery } from '../services/api';
-import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
-export const API_URL = 'https://rickandmortyapi.com/api/character';
-import { PaginationContext } from '../context/PaginationContext';
+import { useGetCharactersQuery } from '../../services/api';
+import ErrorBoundary from '../../components/errorBoundary/ErrorBoundary';
+import { PaginationContext } from '../../context/PaginationContext';
 import Pagination from 'components/SearchPage/searchResults/Pagination/Pagination';
 import CharacterDetails from 'components/SearchPage/CharacterDetails/CharacterDetails';
 import Header from 'components/Header/Header';
@@ -16,8 +15,8 @@ import Footer from 'components/Footer/Footer';
 import { useTheme } from 'context/ThemeContext';
 import SelectionInfo from 'components/SearchPage/SelectionInfo/SelectionInfo';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { getErrorMessage } from '../components/SearchPage/searchResults/searchResults';
-
+import { getErrorMessage } from '../../components/SearchPage/searchResults/searchResults';
+import { useTranslations } from 'next-intl';
 
 function useLocalStorageState(
   key: string,
@@ -42,8 +41,9 @@ export default function SearchPage() {
     Number(searchParams.get('page')) || 1
   );
   const { theme } = useTheme();
+  const t = useTranslations('Header')
 
-  const { data, error, isFetching} = useGetCharactersQuery(
+  const { data, error, isFetching } = useGetCharactersQuery(
     { name: searchQuery, page: currentPage },
     { refetchOnMountOrArgChange: true }
   );
@@ -56,15 +56,12 @@ export default function SearchPage() {
     if (searchQuery) params.set('query', searchQuery);
     params.set('page', String(currentPage));
     if (detailsId) params.set('details', detailsId);
-    window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+    window.history.replaceState(
+      {},
+      '',
+      `${window.location.pathname}?${params}`
+    );
   }, [searchQuery, currentPage, detailsId, searchParams]);
-
-  useEffect(() => {
-    const element = document.querySelector(`.${styles.headerTitle}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, [currentPage]);
 
   return (
     <PaginationContext.Provider
@@ -82,7 +79,7 @@ export default function SearchPage() {
             color: theme === 'light' ? 'rgb(32, 35, 41)' : 'white',
           }}
         >
-          Rick and Morty Character Search
+          {t('title')}
         </p>
         <div className={styles.searchBarWrapper}>
           <SearchBar
@@ -94,35 +91,37 @@ export default function SearchPage() {
           ></SearchBar>
         </div>
 
-        <main
-          className={`${styles.splitContainer} ${detailsId ? styles.withDetails : styles.noDetails}`}
-          style={{
-            backgroundColor: theme === 'dark' ? '#1a1d21' : '',
-          }}
-        >
-          <div className={styles.leftColumn}>
-            <div className={styles.resultsWrapper}>
-              <div className={styles.container}>
-                <div
-                  className={`results-container ${detailsId ? 'withDetails' : ''}`}
-                >
-                  <SearchResults
-                    items={items}
+        <main>
+          <div
+            className={`${styles.splitContainer} ${detailsId ? styles.withDetails : styles.noDetails}`}
+          >
+            <div className={styles.leftColumn}>
+              <div className={styles.resultsWrapper}>
+                <div className={styles.container}>
+                  <div
+                    className={`results-container ${detailsId ? 'withDetails' : ''}`}
+                  >
+                    <SearchResults
+                      items={items}
+                      isLoading={isFetching}
+                      error={error as FetchBaseQueryError | null}
+                    ></SearchResults>
+                  </div>
+                  <SelectionInfo />
+                  <Pagination
                     isLoading={isFetching}
-                    error={error as FetchBaseQueryError | null}
-                  ></SearchResults>
+                    error={getErrorMessage(error as FetchBaseQueryError | null)}
+                  ></Pagination>
                 </div>
-                <SelectionInfo />
-                <Pagination isLoading={isFetching}  error={getErrorMessage(error as FetchBaseQueryError | null)}></Pagination>
               </div>
             </div>
+            <div
+              className={`${styles.rightColumn} ${detailsId ? '' : styles.noDetails}`}
+            >
+              {detailsId ? <CharacterDetails characterId={detailsId} /> : null}
+            </div>
           </div>
-          <div
-            className={`${styles.rightColumn} ${detailsId ? '' : styles.noDetails}`}
-          >
-            {detailsId ? <CharacterDetails characterId={detailsId} /> : null}
-          </div>
-          <Footer />
+          <Footer pageType="search" />
         </main>
       </ErrorBoundary>
     </PaginationContext.Provider>

@@ -1,0 +1,28 @@
+{
+  "Header": {
+    "home": "Character Search",
+    "about": " About the App",
+    "title": "Rick and Morty Character Search"
+  },
+  "SearchBar": {
+    "placeholder": "Enter character name"
+  },
+  "Pagination": {
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "AboutPage": {
+    "appInfo": {
+      "title": "About the Application",
+      "description": "Rick and Morty Character Search is a React application that allows users to search and explore characters from the Rick and Morty REST API, based on the television show Rick and Morty. Users can view detailed information about each character and easily navigate through results using pagination."
+    },
+    "technologies": {
+      "title": "Technologies Used",
+      "description": "The app is built with React and TypeScript, making the code more organized and easier to work with. It uses React Router to let users move between pages without reloading. Data comes from a REST API, and everything runs smoothly thanks to Vite, which helps the app load and build really fast."
+    },
+    "author": {
+      "title": "About the Author",
+      "description": "I am a second-year student at Belarusian State University of Informatics and Radioelectronics (BSUIR), currently studying Computer Engineering, specializing in programming hardware and developing software for embedded mobile systems. As a participant in the RS School React course, I am expanding my skills in modern frontend development."
+    }
+  }
+}

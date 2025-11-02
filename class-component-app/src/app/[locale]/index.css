@@ -3,6 +3,17 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  --results-bg-color: rgb(39, 43, 51);
+  --bg-color: #ffffff;
+  --text-color: rgb(34, 34, 34);
+  --lang-button-disabled: #d0d0d0;
+}
+
+html.dark {
+  --bg-color: rgb(60, 62, 68);
+  --text-color: #ffffff;
+  --results-bg-color: rgb(26, 29, 33);
+  --lang-button-disabled:  #808080;
 }
 
 a {
@@ -13,6 +24,8 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 h1 {

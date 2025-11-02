@@ -1,8 +1,7 @@
-'use client'
 import { useEffect} from 'react';
 import Loader from 'components/Loader/Loader';
 import styles from './CharacterDetail.module.css';
-import { useSearchParams } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useRef } from 'react';
 import { useGetCharacterByIdQuery, useGetEpisodeByUrlQuery } from '../../../services/api';
 
@@ -24,7 +23,8 @@ export interface Character {
 export default function CharacterDetails({
   characterId,
 }: CharacterDetailsProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const cardRef = useRef<HTMLDivElement>(null);
 
   const { data: character, isFetching, error: characterError } = useGetCharacterByIdQuery({
@@ -38,9 +38,9 @@ export default function CharacterDetails({
   const firstEpisodeName = episodeError ? 'Unknown' : episode?.name;
 
   const handleClose = () => {
-    const newParams = new URLSearchParams(searchParams);
+    const newParams = new URLSearchParams(searchParams.toString());
     newParams.delete('details');
-    setSearchParams(newParams);
+    router.push(`?${newParams.toString()}`);
   };
 
   useEffect(() => {

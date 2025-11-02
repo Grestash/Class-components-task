@@ -20,5 +20,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "./jest.setup.ts"]
+  "include": ["src", "./jest.setup.ts", "next.config.js", "src/i18n"]
 }

@@ -61,12 +61,15 @@
     "strictNullChecks": true
   },
   "include": [
+    ".next/types/**/*.ts",
     "dist/types/**/*.ts",
     "jest.setup.ts",
     "next-env.d.ts",
+    "next.config.js",
     "src",
+    "src/i18n",
     "src/types/**/*.d.ts",
-    ".next/types/**/*.ts"
+    "./dist/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
