@@ -36,6 +36,7 @@ export function SearchResults({ items, isLoading, error }: SearchResultsProps) {
     <div className="result-list">
       {items.map((item) => (
         <SearchItem
+          key={item.id}
           id={item.id}
           name={item.name}
           overview={item.overview}

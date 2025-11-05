@@ -27,6 +27,7 @@
   font-size: 4rem;
   text-align: center;
   margin-top: 10vh;
+  color: var(--header-title-color)
 }
 
 .splitContainer {

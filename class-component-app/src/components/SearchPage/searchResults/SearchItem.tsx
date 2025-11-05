@@ -5,6 +5,7 @@ import { useTheme } from 'context/ThemeContext';
 import { AppDispatch, RootState } from 'store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggle } from '../../../features/selection/selectionSlice';
+import Image from 'next/image';
 
 interface SearchItemProps {
   id: number;
@@ -43,8 +44,7 @@ export function SearchItem({ id, name, overview, image }: SearchItemProps) {
       const elem = e.target as HTMLElement
       if(!(elem.closest('a[href]'))) handleToggle()
     }}>
-      <img src={image} alt="Character image" className="search-item-img" />
-
+      <Image src={image } alt="Character image" className="search-item-img" width={150} height={150}/>
       <Link href={`/?${params.toString()}`} className="search-item-name">
         {name}
       </Link>

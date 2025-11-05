@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -7,6 +10,7 @@
   --bg-color: #ffffff;
   --text-color: rgb(34, 34, 34);
   --lang-button-disabled: #d0d0d0;
+  --header-title-color: rgb(32, 35, 41);
 }
 
 html.dark {
@@ -14,6 +18,7 @@ html.dark {
   --text-color: #ffffff;
   --results-bg-color: rgb(26, 29, 33);
   --lang-button-disabled:  #808080;
+  --header-title-color: #fff;
 }
 
 a {
@@ -44,5 +49,6 @@ p {
 button {
   background: none;
   border: none;
+  color: var(--text-color);
 }
 

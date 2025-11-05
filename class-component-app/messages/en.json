@@ -24,5 +24,10 @@
       "title": "About the Author",
       "description": "I am a second-year student at Belarusian State University of Informatics and Radioelectronics (BSUIR), currently studying Computer Engineering, specializing in programming hardware and developing software for embedded mobile systems. As a participant in the RS School React course, I am expanding my skills in modern frontend development."
     }
+  },
+  "NotFound": {
+   "title": "Page not found",
+   "description": "The page you were looking for doesn't exist.",
+   "home": "Return Home"
   }
 }

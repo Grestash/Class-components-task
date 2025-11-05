@@ -12,7 +12,6 @@ import Pagination from 'components/SearchPage/searchResults/Pagination/Paginatio
 import CharacterDetails from 'components/SearchPage/CharacterDetails/CharacterDetails';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
-import { useTheme } from 'context/ThemeContext';
 import SelectionInfo from 'components/SearchPage/SelectionInfo/SelectionInfo';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { getErrorMessage } from '../../components/SearchPage/searchResults/searchResults';
@@ -23,7 +22,10 @@ function useLocalStorageState(
   initialValue: string
 ): [string, (value: string) => void] {
   const [value, setValue] = useState(() => {
-    return localStorage.getItem(key) || initialValue;
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(key) || initialValue;
+    }
+    return initialValue;
   });
 
   useEffect(() => {
@@ -40,8 +42,7 @@ export default function SearchPage() {
   const [currentPage, setCurrentPage] = useState(
     Number(searchParams.get('page')) || 1
   );
-  const { theme } = useTheme();
-  const t = useTranslations('Header')
+  const t = useTranslations('Header');
 
   const { data, error, isFetching } = useGetCharactersQuery(
     { name: searchQuery, page: currentPage },
@@ -73,14 +74,7 @@ export default function SearchPage() {
     >
       <ErrorBoundary>
         <Header />
-        <p
-          className={styles.headerTitle}
-          style={{
-            color: theme === 'light' ? 'rgb(32, 35, 41)' : 'white',
-          }}
-        >
-          {t('title')}
-        </p>
+        <p className={styles.headerTitle}>{t('title')}</p>
         <div className={styles.searchBarWrapper}>
           <SearchBar
             value={searchQuery}

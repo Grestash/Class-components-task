@@ -1,4 +1,5 @@
 import './Footer.css';
+import Image from 'next/image';
 
 export default function Footer(props: { pageType: string }) {
   return (
@@ -7,14 +8,16 @@ export default function Footer(props: { pageType: string }) {
         <p className="footer-title">Created by Pavel Shliatskiy</p>
         <div className="links">
           <a href="https://rs.school/courses/reactjs">
-            <img
-              src="/icons/rss-logo.svg"
+            <Image
+              src={'/icons/rss-logo.svg'}
               alt="RS School icon"
               className="footer-icon"
+              width={50}
+              height={50}
             />
           </a>
           <a href="https://github.com/Grestash">
-            <img
+            <Image
               src={
                 props.pageType === 'search'
                   ? '/icons/github-mark-white.svg'
@@ -22,6 +25,8 @@ export default function Footer(props: { pageType: string }) {
               }
               alt="GitHub icon"
               className="footer-icon"
+              width={50}
+              height={50}
             />
           </a>
         </div>
