@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useGetCharactersQuery } from '../services/api';
 import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
-export const API_URL = 'https://rickandmortyapi.com/api/character';
 import { PaginationContext } from '../context/PaginationContext';
 import Pagination from 'components/SearchPage/searchResults/Pagination/Pagination';
 import CharacterDetails from 'components/SearchPage/CharacterDetails/CharacterDetails';
@@ -15,6 +14,7 @@ import { useTheme } from 'context/ThemeContext';
 import SelectionInfo from 'components/SearchPage/SelectionInfo/SelectionInfo';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { getErrorMessage } from '../components/SearchPage/searchResults/searchResults';
+import { createPortal } from 'react-dom';
 
 function useLocalStorageState(
   key: string,
@@ -31,6 +31,23 @@ function useLocalStorageState(
   return [value, setValue];
 }
 
+function useIsModalViewport() {
+  const [isModalViewport, setIsModalViewport] = useState(
+    window.innerWidth <= 900
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsModalViewport(window.innerWidth <= 900);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return isModalViewport;
+}
+
 export default function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const detailsId = searchParams.get('details');
@@ -39,8 +56,9 @@ export default function SearchPage() {
     Number(searchParams.get('page')) || 1
   );
   const { theme } = useTheme();
+  const isModalViewport = useIsModalViewport();
 
-  const { data, error, isFetching} = useGetCharactersQuery(
+  const { data, error, isFetching } = useGetCharactersQuery(
     { name: searchQuery, page: currentPage },
     { refetchOnMountOrArgChange: true }
   );
@@ -92,7 +110,11 @@ export default function SearchPage() {
         </div>
 
         <main
-          className={`${styles.splitContainer} ${detailsId ? styles.withDetails : styles.noDetails}`}
+          className={`${styles.splitContainer} ${
+            detailsId && !isModalViewport
+              ? styles.withDetails
+              : styles.noDetails
+          }`}
           style={{
             backgroundColor: theme === 'dark' ? '#1a1d21' : '',
           }}
@@ -101,7 +123,9 @@ export default function SearchPage() {
             <div className={styles.resultsWrapper}>
               <div className={styles.container}>
                 <div
-                  className={`results-container ${detailsId ? 'withDetails' : ''}`}
+                  className={`results-container ${
+                    detailsId && !isModalViewport ? 'withDetails' : ''
+                  }`}
                 >
                   <SearchResults
                     items={items}
@@ -110,17 +134,37 @@ export default function SearchPage() {
                   ></SearchResults>
                 </div>
                 <SelectionInfo />
-                <Pagination isLoading={isFetching}  error={getErrorMessage(error as FetchBaseQueryError | null)}></Pagination>
+                <Pagination
+                  isLoading={isFetching}
+                  error={getErrorMessage(error as FetchBaseQueryError | null)}
+                ></Pagination>
               </div>
             </div>
           </div>
-          <div
-            className={`${styles.rightColumn} ${detailsId ? '' : styles.noDetails}`}
-          >
-            {detailsId ? <CharacterDetails characterId={detailsId} /> : null}
-          </div>
+          {!isModalViewport && (
+            <div
+              className={`${styles.rightColumn} ${detailsId ? '' : styles.noDetails}`}
+            >
+              {detailsId ? <CharacterDetails characterId={detailsId} /> : null}
+            </div>
+          )}
           <Footer />
         </main>
+
+        {detailsId &&
+          isModalViewport &&
+          createPortal(
+            <div
+              className={styles.modalOverlay}
+              aria-modal="true"
+              role="dialog"
+            >
+              <div className={styles.modalContent}>
+                <CharacterDetails characterId={detailsId} />
+              </div>
+            </div>,
+            document.body
+          )}
       </ErrorBoundary>
     </PaginationContext.Provider>
   );

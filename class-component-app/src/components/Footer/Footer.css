@@ -17,9 +17,16 @@ footer {
 }
 
 .search-page-footer {
-
     color: #fff;
     max-width: 80%;
     margin: 0 auto;
 }
 
+@media (max-width: 992px) {
+    .links {
+        min-width: 110px;
+    }
+   p {
+    font-size: 0.9em;
+   }
+}

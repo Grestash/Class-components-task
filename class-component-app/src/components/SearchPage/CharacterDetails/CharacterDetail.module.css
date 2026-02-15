@@ -98,3 +98,9 @@
     width: 4em;
     height: auto;
 }
+
+@media (max-width: 900px) {
+    .closeButton {
+      
+    }
+}

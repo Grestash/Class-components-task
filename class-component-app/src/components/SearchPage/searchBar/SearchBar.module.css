@@ -3,6 +3,8 @@
   align-items: center;
   justify-content: space-between;
   column-gap: 30px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .searchBarInput {
@@ -11,6 +13,8 @@
   font-size: 20px;
   border-radius: 10px;
   padding: 8px;
+  flex-grow: 1;
+  min-width: 195px;
 }
 
 .light {
@@ -18,10 +22,11 @@
 }
 
 .dark {
-  background-color:  #24292e;
+  background-color: #24292e;
   color: #fff;
   border: none;
 }
+
 .searchBarButton {
   cursor: pointer;
   height: 60px;
@@ -36,6 +41,7 @@
     background-color 0.2s,
     transform 0.1s,
     box-shadow 0.2s;
+  flex-shrink: 0;
 }
 
 .searchBarButton:hover {
@@ -51,4 +57,10 @@
 .buttonIcon {
   width: 30px;
   height: 30px;
+}
+
+@media (max-width: 576px) {
+  .searchBar {
+    max-width: 300px;
+  }
 }

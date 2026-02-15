@@ -49,3 +49,12 @@ nav {
 .nav-link.active::after {
     width: 100%;
 }
+
+@media (max-width: 576px) {
+    nav {
+        font-size: 0.9em;
+    }
+    .nav-link::after {
+        bottom: 8px
+    }
+}
