@@ -29,7 +29,7 @@ export function SearchResults({ items, isLoading, error }: SearchResultsProps) {
   }
 
   if (error) {
-    return <div className="error-text">{getErrorMessage(error)}</div>;
+    return <p className="error-text">{getErrorMessage(error)}</p>;
   }
   return (
     <div className="result-list">

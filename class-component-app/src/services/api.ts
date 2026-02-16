@@ -45,8 +45,10 @@ export const rickAndMortyApi = createApi({
       },
     }),
     getCharacterById: builder.query<Character, { characterId: string }>({
-      query: ({ characterId }) => {console.log(characterId)
-        return `character/${characterId}`}
+      query: ({ characterId }) => {
+        console.log(characterId);
+        return `character/${characterId}`;
+      },
     }),
     getEpisodeByUrl: builder.query<{ name: string }, string>({
       query: (url) => url.replace('https://rickandmortyapi.com/api/', ''),

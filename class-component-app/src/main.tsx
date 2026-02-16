@@ -13,11 +13,7 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <BrowserRouter
-      basename={
-        import.meta.env.MODE === 'production' ? '/Class-components-task' : '/'
-      }
-    >
+    <BrowserRouter>
       <Provider store={store}>
         <App />
       </Provider>

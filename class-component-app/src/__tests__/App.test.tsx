@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import SearchPage from '../pages/SearchPage';
 import '@testing-library/jest-dom';
-import { API_URL } from '../pages/SearchPage';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeContext } from 'context/ThemeContext';
@@ -94,7 +93,7 @@ test('Makes initial API call', async () => {
   );
 
   await waitFor(() => {
-    expect(fetch).toHaveBeenLastCalledWith(`${API_URL}/?page=1`);
+    expect(fetch).toHaveBeenLastCalledWith("https://rickandmortyapi.com/api/?page=1");
   });
 });
 
