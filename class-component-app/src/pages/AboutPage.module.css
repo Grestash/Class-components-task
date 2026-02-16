@@ -6,6 +6,7 @@
     flex-direction: column;
     row-gap: 20px;
 }
+
 .dark {
     color: white
 }
@@ -32,8 +33,35 @@ h2 {
     font-weight: 700;
     margin-bottom: 1.5rem;
 }
+
 .infoText {
     width: 50%;
     text-align: justify;
     font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .aboutImage {
+        float: right;
+        max-width: 30%;
+    }
+
+    .infoText {
+        width: 100%;
+    }
+
+    p {
+        padding-top: 3%;
+    }
+
+    .aboutImage.reverse {
+        float: left;
+    }
+    h2 {
+        font-size: 2rem;
+    }
+    .aboutWrapper {
+        padding-top: 20px;
+    }
+
 }

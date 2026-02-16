@@ -61,6 +61,8 @@ export default function SelectionInfo() {
       link.download = `${selectedIds.length}_characters.csv`;
       link.click();
       URL.revokeObjectURL(url);
+
+      handleClear()
     } catch (error) {
       console.error('Failed to download character details:', error);
     }
@@ -74,7 +76,6 @@ export default function SelectionInfo() {
           selected
         </p>
         <div className="selection-info-btns-wrapper">
-          {' '}
           <button onClick={handleClear} className="selection-info-btn clear">
             Unselect all
           </button>

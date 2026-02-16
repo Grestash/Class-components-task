@@ -15,38 +15,8 @@ import SelectionInfo from 'components/SearchPage/SelectionInfo/SelectionInfo';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { getErrorMessage } from '../components/SearchPage/searchResults/searchResults';
 import { createPortal } from 'react-dom';
-
-function useLocalStorageState(
-  key: string,
-  initialValue: string
-): [string, (value: string) => void] {
-  const [value, setValue] = useState(() => {
-    return localStorage.getItem(key) || initialValue;
-  });
-
-  useEffect(() => {
-    localStorage.setItem(key, value);
-  }, [key, value]);
-
-  return [value, setValue];
-}
-
-function useIsModalViewport() {
-  const [isModalViewport, setIsModalViewport] = useState(
-    window.innerWidth <= 900
-  );
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsModalViewport(window.innerWidth <= 900);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return isModalViewport;
-}
+import useMediaQuery from 'hooks/useMediaQuery';
+import useLocalStorageState from 'hooks/useLocalStorageState';
 
 export default function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -56,7 +26,7 @@ export default function SearchPage() {
     Number(searchParams.get('page')) || 1
   );
   const { theme } = useTheme();
-  const isModalViewport = useIsModalViewport();
+  const isMobile = useMediaQuery('(max-width: 900px)');
 
   const { data, error, isFetching } = useGetCharactersQuery(
     { name: searchQuery, page: currentPage },
@@ -111,9 +81,7 @@ export default function SearchPage() {
 
         <main
           className={`${styles.splitContainer} ${
-            detailsId && !isModalViewport
-              ? styles.withDetails
-              : styles.noDetails
+            detailsId && !isMobile ? styles.withDetails : styles.noDetails
           }`}
           style={{
             backgroundColor: theme === 'dark' ? '#1a1d21' : '',
@@ -124,7 +92,7 @@ export default function SearchPage() {
               <div className={styles.container}>
                 <div
                   className={`results-container ${
-                    detailsId && !isModalViewport ? 'withDetails' : ''
+                    detailsId && !isMobile ? 'withDetails' : ''
                   }`}
                 >
                   <SearchResults
@@ -141,7 +109,7 @@ export default function SearchPage() {
               </div>
             </div>
           </div>
-          {!isModalViewport && (
+          {!isMobile && (
             <div
               className={`${styles.rightColumn} ${detailsId ? '' : styles.noDetails}`}
             >
@@ -152,7 +120,7 @@ export default function SearchPage() {
         </main>
 
         {detailsId &&
-          isModalViewport &&
+          isMobile &&
           createPortal(
             <div
               className={styles.modalOverlay}
